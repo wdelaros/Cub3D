@@ -45,7 +45,8 @@ all: dir $(NAME)
 # Generates output file
 $(NAME): $(OBJS)
 	@cd LIBFT/ && make && cd ..
-	@$(CC) $(CFLAGS) $(OBJS) $(LDIR)$(LIBFT) -o $(NAME)
+	@cd MLX42/ && make && cd ..
+	@$(CC) $(CFLAGS) $(OBJS) MLX42/libmlx42.a $(LDIR)$(LIBFT) -I include -lglfw -L "/Users/$(USER)/.brew/opt/glfw/lib/" -o $(NAME)
 	@echo "$(ERASE_LINE)$(GREEN)✔️ $(ITALIC)$(NAME) successfully compile.$(RESET)\
 	$(GREEN) ✔️$(RESET)"
 
@@ -62,6 +63,8 @@ dir:
 # Removes objects
 clean:
 	@cd LIBFT/ && make clean && cd ..
+	@printf "💣 $(RED)Removing MLX42 objects...$(RESET) 💥\n"
+	@cd MLX42/ && make clean && cd ..
 	@printf "💣 $(RED)Removing $(NAME) objects...$(RESET) 💥\n"
 	@$(RM) $(OBJS_DIR)
 
@@ -69,6 +72,8 @@ clean:
 fclean: clean
 	@printf "💣 $(RED)Removing libft executable$(RESET) 💥\n"
 	@$(RM) $(LDIR)$(LIBFT)
+	@printf "💣 $(RED)Removing MLX42 executable$(RESET) 💥\n"
+	@$(RM) MLX42/libmlx42.a
 	@printf "💣 $(RED)Removing $(NAME) executable$(RESET) 💥\n"
 	@$(RM) $(NAME)
 
