@@ -106,8 +106,8 @@ all: dir $(NAME)
 # Generates output file
 $(NAME): $(OBJS)
 	@ar -rcs $(NAME) $(OBJS)
-	@echo "$(ERASE_LINE)$(GREEN)✔️ $(ITALIC)Libft successfully created.$(RESET)\
-	$(GREEN) ✔️$(RESET)"
+	@echo "$(ERASE_LINE)$(GREEN)✔︎ $(ITALIC)Libft successfully created.$(RESET)\
+	$(GREEN) ✔︎$(RESET)"
 
 # Compiles sources into objects
 $(OBJS_DIR)%.o: src/*/%.c

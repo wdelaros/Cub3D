@@ -2,7 +2,7 @@
 #                                VARIABLES                                     #
 #------------------------------------------------------------------------------#
 
-NAME		=	executable
+NAME		=	cub3d
 LIBFT		=	libft.a
 LDIR		=	libft/
 
@@ -30,7 +30,7 @@ CFLAGS		=	-Wall -Werror -Wextra
 RM			=	rm -rf
 
 # Sources are all .c files
-SRCS		=	
+SRCS		=	cub3d.c \
 
 OBJS_DIR	=	obj/
 OBJS_LST	=	$(patsubst %.c, %.o, $(SRCS))
@@ -47,8 +47,8 @@ $(NAME): $(OBJS)
 	@cd LIBFT/ && make && cd ..
 	@cd MLX42/ && make && cd ..
 	@$(CC) $(CFLAGS) $(OBJS) MLX42/libmlx42.a $(LDIR)$(LIBFT) -I include -lglfw -L "/Users/$(USER)/.brew/opt/glfw/lib/" -o $(NAME)
-	@echo "$(ERASE_LINE)$(GREEN)✔️ $(ITALIC)$(NAME) successfully compile.$(RESET)\
-	$(GREEN) ✔️$(RESET)"
+	@echo "$(ERASE_LINE)$(GREEN)✔︎ $(ITALIC)$(NAME) successfully compile.$(RESET)\
+	$(GREEN) ✔︎$(RESET)"
 
 # Compiles sources into objects
 $(OBJS_DIR)%.o: src/*/%.c
@@ -59,6 +59,9 @@ $(OBJS_DIR)%.o: src/*/%.c
 # create objects directory
 dir:
 	@mkdir -p $(OBJS_DIR)
+
+glfwdown:
+	brew install glfw
 
 # Removes objects
 clean:
@@ -81,6 +84,3 @@ fclean: clean
 re: fclean all
 	@echo "$(ERASE_LINE)$(GREEN)✔️ $(ITALIC)Remake complete$(RESET)\
 	$(GREEN) ✔️$(RESET)"
-
-leak: all
-	@valgrind --leak-check=full --show-leak-kinds=all --trace-children=yes --track-fds=yes --track-origins=yes --suppressions="\"$(PWD)/supp.txt\"" ./$(NAME)
