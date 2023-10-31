@@ -2,7 +2,7 @@
 
 int main(int argc, char *argv[])
 {
-	(void)argc;
-	(void)argv;
-	return 0;
+	if (argc != 2 || ft_isfile(argv[argc - 1]) != 5)
+		return (ft_dprintf(2, "wrong extension\n"), 1);
+	return (0);
 }
