@@ -30,7 +30,11 @@ CFLAGS		=	-Wall -Werror -Wextra
 RM			=	rm -rf
 
 # Sources are all .c files
+#base_file
+#parsing
 SRCS		=	cub3d.c \
+\
+				parsing.c \
 
 OBJS_DIR	=	obj/
 OBJS_LST	=	$(patsubst %.c, %.o, $(SRCS))
