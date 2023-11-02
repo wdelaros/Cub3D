@@ -65,14 +65,14 @@ void	print_map(char **map)
 	}
 }
 
-int	ft_parsing(char *file)
+void ft_parsing(char *file, t_data *data)
 {
 	char	**map;
 
 	map = get_map(file);
 	if (!map)
-		return (1);
+		return ;
+	data = parse_map(map);
 	// print_map(map);
-	// map  =ft_free_null(map);
-	return (0);
+	// map = ft_free_null(map);
 }

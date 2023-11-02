@@ -35,6 +35,7 @@ RM			=	rm -rf
 SRCS		=	cub3d.c \
 \
 				parsing.c \
+				map.c \
 
 OBJS_DIR	=	obj/
 OBJS_LST	=	$(patsubst %.c, %.o, $(SRCS))
