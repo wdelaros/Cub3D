@@ -6,7 +6,7 @@
 /*   By: wdelaros <wdelaros@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 12:30:31 by wdelaros          #+#    #+#             */
-/*   Updated: 2023/10/30 08:45:00 by wdelaros         ###   ########.fr       */
+/*   Updated: 2023/11/02 09:26:44 by wdelaros         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,7 @@ char	*ft_fstrjoin(char *s1, char *s2);
 
 int		ft_intlen(long int n, int base);
 int		ft_isfile(char *file);
+int		ft_strcmp(char *s1, char *s2);
 
 long	ft_atol(const char *str);
 
@@ -116,6 +117,7 @@ void	*ft_xfree(void *ptr);
 
 char	*ft_convertbase(char *num, int initbase, int finalbase);
 char	*ft_ffstrjoin(char *s1, char *s2);
+char	**ft_free_null(char **array);
 char	**ft_split_char(const char *lines);
 
 #endif

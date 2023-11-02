@@ -86,5 +86,5 @@ fclean: clean
 
 # Removes objects and executables and remakes
 re: fclean all
-	@echo "$(ERASE_LINE)$(GREEN)✔️ $(ITALIC)Remake complete$(RESET)\
-	$(GREEN) ✔️$(RESET)"
+	@echo "$(ERASE_LINE)$(GREEN)✔︎ $(ITALIC)Remake complete$(RESET)\
+	$(GREEN) ✔︎$(RESET)"
