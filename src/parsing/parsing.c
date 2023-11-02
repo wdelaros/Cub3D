@@ -13,8 +13,6 @@ static char	*get_file(char	*file, int i)
 	while (str)
 	{
 		str = get_next_line(fd);
-		if (str == NULL)
-			break ;
 		if (i == 0)
 			strdef = ft_strdup(str);
 		else if (!ft_strcmp(str, "\n"))
@@ -39,8 +37,10 @@ static char	**get_map(char	*file)
 	if (!str)
 		return (NULL);
 	map = ft_split(str, '\n');
+	if (!map)
+		return (NULL);
 	free(str);
-	while (++i && map[i])
+	while (++i && map && map[i])
 	{
 		if (!ft_strncmp(map[i], "\r", 1))
 		{
@@ -53,7 +53,7 @@ static char	**get_map(char	*file)
 
 void	print_map(char **map)
 {
-	for (int i = 0; map[i]; i++)
+	for (int i = 0; map && map[i]; i++)
 	{
 		if (!ft_strcmp(map[i], "\n"))
 			ft_printf("%s", map[i]);
@@ -69,7 +69,7 @@ int	ft_parsing(char *file)
 	map = get_map(file);
 	if (!map)
 		return (1);
-	print_map(map);
-	map  =ft_free_null(map);
+	// print_map(map);
+	// map  =ft_free_null(map);
 	return (0);
 }
