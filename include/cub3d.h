@@ -6,4 +6,27 @@
 
 int	ft_parsing(char *file);
 
+typedef struct s_pos
+{
+	float	x;
+	float	y;
+}	t_pos;
+
+typedef struct s_color
+{
+	int		r;
+	int		g;
+	int		b;
+}	t_color;
+
+typedef struct s_data
+{
+	char	**floor;
+	char	**wall;
+	char	**sky;
+	t_color	c_floor;
+	t_color	c_sky;
+	t_pos	hero;
+}	t_data;
+
 #endif
