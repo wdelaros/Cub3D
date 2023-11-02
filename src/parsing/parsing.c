@@ -72,7 +72,7 @@ void ft_parsing(char *file, t_data *data)
 	map = get_map(file);
 	if (!map)
 		return ;
-	data = parse_map(map);
+	data = parse_map(map, data);
 	// print_map(map);
 	// map = ft_free_null(map);
 }
