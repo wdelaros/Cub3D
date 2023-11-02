@@ -6,6 +6,12 @@
 
 int	ft_parsing(char *file);
 
+typedef struct s_sprite
+{
+	char		*path;
+	mlx_image_t	*img;
+}	t_sprite;
+
 typedef struct s_pos
 {
 	float	x;
@@ -21,12 +27,16 @@ typedef struct s_color
 
 typedef struct s_data
 {
-	char	**floor;
-	char	**wall;
-	char	**sky;
-	t_color	c_floor;
-	t_color	c_sky;
-	t_pos	hero;
+	char		**floor;
+	char		**wall;
+	char		**sky;
+	t_color		c_floor;
+	t_color		c_sky;
+	t_pos		hero;
+	t_sprite	north;
+	t_sprite	south;
+	t_sprite	west;
+	t_sprite	east;
 }	t_data;
 
 #endif
