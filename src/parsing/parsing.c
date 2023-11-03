@@ -1,13 +1,5 @@
 #include "../../include/parsing.h"
 
-void	ft_purge_parsing(t_data	*data)
-{
-	ft_xfree(data->north.path);
-	ft_xfree(data->south.path);
-	ft_xfree(data->east.path);
-	ft_xfree(data->west.path);
-}
-
 static char	*get_file(char	*file, int i)
 {
 	int		fd;
@@ -75,12 +67,9 @@ void	print_map(char **map)
 
 void ft_parsing(char *file, t_data *data)
 {
-	char	**map;
-
-	map = get_map(file);
-	if (!map)
+	data->floor = get_map(file);
+	if (!data->floor)
 		return ;
-	data = parse_map(map, data);
-	map = ft_free_null(map);
+	data = parse_map(data);
 	ft_purge_parsing(data);
 }

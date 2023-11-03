@@ -35,6 +35,7 @@ RM			=	rm -rf
 SRCS		=	cub3d.c \
 \
 				parsing.c \
+				parsing_utils.c \
 				map.c \
 
 OBJS_DIR	=	obj/
