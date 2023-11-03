@@ -20,6 +20,7 @@ typedef struct s_color
 	int		r;
 	int		g;
 	int		b;
+	int		set;
 }	t_color;
 
 typedef struct s_data
