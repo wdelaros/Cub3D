@@ -25,6 +25,7 @@ typedef struct s_color
 
 typedef struct s_data
 {
+	mlx_t		*mlx;
 	char		**floor;
 	char		**wall;
 	char		**sky;
