@@ -39,6 +39,7 @@ SRCS_LST		=	ft_atoi.c \
 					ft_isalpha.c \
 					ft_isascii.c \
 					ft_isdigit.c \
+					ft_isnumber.c \
 					ft_itoa.c \
 \
 					ft_lstadd_back.c \
