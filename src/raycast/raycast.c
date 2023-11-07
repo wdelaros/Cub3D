@@ -1,6 +1,9 @@
 #include "../include/raycast.h"
 
-mlx_image_t	*g_img;
+void	ft_draw_floor_and_sky(t_data *game)
+{
+
+}
 
 void	ft_raycast(t_data *game)
 {
@@ -33,8 +36,9 @@ void	ft_hook(mlx_key_data_t keydata, void *param)
 
 int	main(void)
 {
-	mlx_t	*mlx;
-	t_data	game;
+	mlx_t		*mlx;
+	t_data		game;
+	mlx_image_t	*g_img;
 
 	ft_bzero(&game, sizeof(game));
 	mlx = mlx_init(WIDTH, HEIGHT, "MLX42", true);
