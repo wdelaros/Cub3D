@@ -38,7 +38,7 @@ static char	**get_map(char	*file)
 	i = -1;
 	str = get_file(file, 0);
 	if (!str)
-		return ( NULL);
+		return (NULL);
 	map = ft_split(str, '\n');
 	if (!map)
 		return (ft_xfree(str), NULL);
@@ -65,11 +65,14 @@ void	print_map(char **map)
 	}
 }
 
-void ft_parsing(char *file, t_data *data)
+void	ft_parsing(char *file, t_data *data)
 {
-	data->floor = get_map(file);
-	if (!data->floor)
-		return ;
-	data = parse_map(data);
+	char	**map;
+
+	map = get_map(file);
+	if (!map)
+		ft_exit_parsing("Empty map", map, data);
+	data = parse_file(map, data);
+	ft_free_null(map);
 	ft_purge_parsing(data);
 }

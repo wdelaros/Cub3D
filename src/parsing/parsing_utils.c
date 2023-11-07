@@ -6,12 +6,15 @@ void	ft_purge_parsing(t_data	*data)
 	ft_xfree(data->south.path);
 	ft_xfree(data->east.path);
 	ft_xfree(data->west.path);
-	ft_free_null(data->floor);
+	if (data->floor)
+		ft_free_null(data->floor);
 }
 
-void	ft_exit_parsing(char *str_err, t_data *data)
+void	ft_exit_parsing(char *str_err, char **map, t_data *data)
 {
-	ft_dprintf(2, "%s\n", str_err);
+	ft_dprintf(2, "Error\n%s\n", str_err);
+	if (map)
+		ft_free_null(map);
 	ft_purge_parsing(data);
 	exit (1);
 }
@@ -22,7 +25,7 @@ char	*del_space(char *str)
 	int		i;
 
 	i = 0;
-	while (str && (str[i] == ' ' /*|| str[i] == '	'*/))
+	while (str && (str[i] == ' ' || str[i] == '	'))
 		i++;
 	res = ft_strdup(str + i);
 	return (free(str), res);

@@ -1,114 +1,54 @@
 #include "../../include/parsing.h"
 
-//to finish
-static int	set_color(int color, t_data *data)
+static int	is_map(char	*str)
 {
-
-	if (color >= 0 && color <= 255)
-		return (color);
-	else
-		ft_exit_parsing("Error\ncolor out of range", data);
+	if (ft_find_first_alphanum(str) == '1' || \
+	ft_find_first_alphanum(str) == '0')
+		return (1);
 	return (0);
 }
 
-static t_data	*get_color(char *str, t_data *data)
+static int	is_correct_data(char *str)
 {
-	char	**split_color;
-	char	*tmp;
+	if (!ft_strcmp_until_space(str, "NO") || !ft_strcmp_until_space(str, "SO") \
+	|| !ft_strcmp_until_space(str, "EA") || !ft_strcmp_until_space(str, "WE") \
+	|| !ft_strcmp_until_space(str, "F") || !ft_strcmp_until_space(str, "C") \
+	|| !ft_strcmp(str, "\r") || !ft_strcmp(str, "\0"))
+		return (1);
+	return (0);
+}
 
-	if (!ft_strcmp_until(str, "F", ' '))
+static t_data	*parse_map(t_data *data, char **map, int i)
+{
+	while (map[i])
 	{
-		if (!data->c_floor.set)
-		{
-			tmp = del_space(ft_strdup(str + 1));
-			split_color = ft_split(tmp, ',');
-			data->c_floor.r = set_color(ft_atoi(split_color[0]), data);
-			data->c_floor.g = set_color(ft_atoi(split_color[1]), data);
-			data->c_floor.b = set_color(ft_atoi(split_color[2]), data);
-			ft_xfree(tmp);
-			ft_free_null(split_color);
-			data->c_floor.set = 1;
-		}
-		else
-			ft_exit_parsing("Error\n2 F", data);
-	}
-	else if (!ft_strcmp_until(str, "C", ' '))
-	{
-		if (!data->c_sky.set)
-		{
-			tmp = del_space(ft_strdup(str + 1));
-			split_color = ft_split(tmp, ',');
-			data->c_sky.r = set_color(ft_atoi(split_color[0]), data);
-			data->c_sky.g = set_color(ft_atoi(split_color[1]), data);
-			data->c_sky.b = set_color(ft_atoi(split_color[2]), data);
-			ft_xfree(tmp);
-			ft_free_null(split_color);
-			data->c_sky.set = 1;
-		}
-		else
-			ft_exit_parsing("Error\n2 C", data);
+		ft_printf("Cub3D map[%d]	: %s\n", i, map[i]);
+		i++;
 	}
 	return (data);
 }
 
-static t_data	*get_sprite(char *sprite, t_data *data)
-{
-	if (!ft_strcmp_until(sprite, "NO", ' '))
-	{
-		if (data->north.path)
-			ft_exit_parsing("Error\n2 NO", data);
-		data->north.path = del_space(ft_strdup(sprite + 2));
-	}
-	else if (!ft_strcmp_until(sprite, "SO", ' '))
-	{
-		if (data->south.path)
-			ft_exit_parsing("Error\n2 SO", data);
-		data->south.path = del_space(ft_strdup(sprite + 2));
-	}
-	else if (!ft_strcmp_until(sprite, "EA", ' '))
-	{
-		if (data->east.path)
-			ft_exit_parsing("Error\n2 EA", data);
-		data->east.path = del_space(ft_strdup(sprite + 2));
-	}
-	else if (!ft_strcmp_until(sprite, "WE", ' '))
-	{
-		if (data->west.path)
-			ft_exit_parsing("Error\n2 WE", data);
-		data->west.path = del_space(ft_strdup(sprite + 2));
-	}
-	return (get_color(sprite, data));
-}
-
-int	count_char(char *str, char c)
-{
-	int	i;
-	int	count;
-
-	i = 0;
-	count = 0;
-	if (!str)
-		return (0);
-	while (str[i])
-	{
-		if (str[i] == c)
-			count++;
-		i++;
-	}
-	return (count);
-}
-
-t_data	*parse_map(t_data *data)
+t_data	*parse_file(char **map, t_data *data)
 {
 	int	i;
 
 	i = 0;
-	while (data->floor && data->floor[i])
+	while (map && map[i])
 	{
-		data->floor[i] = del_space(data->floor[i]);
-		data = get_sprite(data->floor[i], data);
-		ft_printf("map[%d]	: %s\n", i, data->floor[i]);
+		if (is_map(map[i]))
+			break ;
+		map[i] = del_space(map[i]);
+		if (is_correct_data(map[i]))
+			data = get_sprite(map[i], map, data);
+		else
+			ft_exit_parsing("Wrong identifier", map, data);
+		ft_printf("file[%d]	: %s\n", i, map[i]);
 		i++;
 	}
+	if (!data->c_floor.set || !data->c_sky.set || !data->north.path \
+		|| !data->south.path || !data->east.path || !data->west.path)
+		ft_exit_parsing("missing information", map, data);
+	else
+		data = parse_map(data, map, i);
 	return (data);
 }
