@@ -61,6 +61,9 @@ $(OBJS_DIR)%.o: src/*/%.c
 	$(RESET)"
 	@$(CC) $(CFLAGS) -c $< -o $@
 
+rc:
+	@$(CC) $(CFLAGS) src/raycast.c MLX42/libmlx42.a $(LDIR)$(LIBFT) -I include -lglfw -L "/Users/$(USER)/.brew/opt/glfw/lib/" -o $(NAME)
+
 # create objects directory
 dir:
 	@mkdir -p $(OBJS_DIR)
