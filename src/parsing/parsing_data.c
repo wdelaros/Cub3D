@@ -16,12 +16,10 @@ static t_data	*get_c_floor(char *str, char **map, t_data *data)
 
 	if (count_char(str, ',') != 2)
 		ft_exit_parsing("wrong data for F", map, data);
-	tmp = del_space(ft_strdup(str + 1));
+	tmp = del_all_space(ft_strdup(str + 1));
 	split_color = ft_split(tmp, ',');
-	if (!split_color[0] || !split_color[1] || !split_color[2] \
-	|| split_color[0][0] == -62 || split_color[1][0] == -62 \
-	|| split_color[2][0] == -62 || ft_strlen(split_color[0]) > 3 \
-	|| ft_strlen(split_color[1]) > 3 || ft_strlen(split_color[2]) > 3)
+	if (check_color(split_color[0]) || check_color(split_color[1]) \
+	|| check_color(split_color[2]))
 	{
 		ft_xfree(tmp);
 		ft_free_null(split_color);
@@ -43,12 +41,10 @@ static t_data	*get_c_sky(char *str, char **map, t_data *data)
 
 	if (count_char(str, ',') != 2)
 		ft_exit_parsing("wrong data for C", map, data);
-	tmp = del_space(ft_strdup(str + 1));
+	tmp = del_all_space(ft_strdup(str + 1));
 	split_color = ft_split(tmp, ',');
-	if (!split_color[0] || !split_color[1] || !split_color[2] \
-	|| split_color[0][0] == -62 || split_color[1][0] == -62 \
-	|| split_color[2][0] == -62 || ft_strlen(split_color[0]) > 3 \
-	|| ft_strlen(split_color[1]) > 3 || ft_strlen(split_color[2]) > 3)
+	if (check_color(split_color[0]) || check_color(split_color[1]) \
+	|| check_color(split_color[2]))
 	{
 		ft_xfree(tmp);
 		ft_free_null(split_color);

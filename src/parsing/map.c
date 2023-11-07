@@ -18,13 +18,53 @@ static int	is_correct_data(char *str)
 	return (0);
 }
 
-static t_data	*parse_map(t_data *data, char **map, int i)
+static char	*change_space(char *str, char **map, t_data *data)
 {
-	while (map[i])
+	int		i;
+
+	i = 0;
+	while (str[i])
 	{
-		ft_printf("Cub3D map[%d]	: %s\n", i, map[i]);
+		if (str[i] == TAB)
+			ft_exit_parsing("Invalid map", map, data);
+		if (str[i] == SP || str[i] == -62)
+			str[i] = '=';
 		i++;
 	}
+	return (str);
+}
+
+static char	**cpy_map(char **map, char **map_cpy)
+{
+	int	i;
+
+	i = 0;
+	while (map_cpy[i])
+		i++;
+	map = ft_calloc(i + 1, sizeof(char *));
+	if (!map)
+		return (NULL);
+	i = 0;
+	while (map_cpy[i])
+	{
+		map[i] = ft_strdup(map_cpy[i]);
+		i++;
+	}
+	return (map);
+}
+
+static t_data	*parse_map(t_data *data, char **map, int i)
+{
+	data->wall = cpy_map(NULL, map + i);
+	i = 0;
+	while (data->wall[i])
+	{
+		data->wall[i] = change_space(data->wall[i], map, data);
+		// ft_printf("Cub3D map[%d] strlen:%d	: %s\n", i, ft_strlen(data->wall[i]), data->wall[i]);
+		i++;
+	}
+	data->floor = cpy_map(NULL, data->wall);
+	data->sky = cpy_map(NULL, data->wall);
 	return (data);
 }
 
@@ -42,7 +82,7 @@ t_data	*parse_file(char **map, t_data *data)
 			data = get_sprite(map[i], map, data);
 		else
 			ft_exit_parsing("Wrong identifier", map, data);
-		ft_printf("file[%d]	: %s\n", i, map[i]);
+		// ft_printf("file[%d]	: %s\n", i, map[i]);
 		i++;
 	}
 	if (!data->c_floor.set || !data->c_sky.set || !data->north.path \

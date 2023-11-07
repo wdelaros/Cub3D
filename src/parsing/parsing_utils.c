@@ -8,6 +8,10 @@ void	ft_purge_parsing(t_data	*data)
 	ft_xfree(data->west.path);
 	if (data->floor)
 		ft_free_null(data->floor);
+	if (data->sky)
+		ft_free_null(data->sky);
+	if (data->wall)
+		ft_free_null(data->wall);
 }
 
 void	ft_exit_parsing(char *str_err, char **map, t_data *data)
@@ -19,13 +23,20 @@ void	ft_exit_parsing(char *str_err, char **map, t_data *data)
 	exit (1);
 }
 
+int	check_color(char *str)
+{
+	if (!str || str[0] == -62 || ft_strlen(str) > 3 || !ft_isnumber(str))
+		return (1);
+	return (0);
+}
+
 char	*del_space(char *str)
 {
 	char	*res;
 	int		i;
 
 	i = 0;
-	while (str && (str[i] == ' ' || str[i] == '	'))
+	while (str && (str[i] == SP || str[i] == TAB))
 		i++;
 	res = ft_strdup(str + i);
 	return (free(str), res);

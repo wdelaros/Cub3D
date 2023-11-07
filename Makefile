@@ -38,6 +38,7 @@ SRCS		=	cub3d.c \
 				map_utils.c \
 				parsing.c \
 				parsing_data.c \
+				parsing_data_utils.c \
 				parsing_utils.c \
 
 OBJS_DIR	=	obj/

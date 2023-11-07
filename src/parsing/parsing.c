@@ -74,5 +74,4 @@ void	ft_parsing(char *file, t_data *data)
 		ft_exit_parsing("Empty map", map, data);
 	data = parse_file(map, data);
 	ft_free_null(map);
-	ft_purge_parsing(data);
 }
