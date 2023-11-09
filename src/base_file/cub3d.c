@@ -10,12 +10,22 @@ int	main(int argc, char *argv[])
 		, 1);
 	ft_parsing(argv[1], &data);
 	for (int i = 0; data.wall && data.wall[i]; i++)
-		ft_printf("data.wall[%d]	:%s\n", i, data.wall[i]);
-	ft_printf("\n");
-	for (int i = 0; data.floor && data.floor[i]; i++)
-		ft_printf("data.floor[%d]	:%s\n", i, data.floor[i]);
-	ft_printf("\n");
-	for (int i = 0; data.sky && data.sky[i]; i++)
-		ft_printf("data.sky[%d]	:%s\n", i, data.sky[i]);
+	{
+		ft_printf("data.wall[%d]	:", i);
+		for (int j = 0; i < data.wall[i][j]; j++)
+		{
+			if (data.wall[i][j] == GS)
+				ft_printf("=");
+			else
+				ft_printf("%c", data.wall[i][j]);
+		}
+		ft_printf("\n");
+	}
+	// ft_printf("\n");
+	// for (int i = 0; data.floor && data.floor[i]; i++)
+	// 	ft_printf("data.floor[%d]	:%s\n", i, data.floor[i]);
+	// ft_printf("\n");
+	// for (int i = 0; data.sky && data.sky[i]; i++)
+	// 	ft_printf("data.sky[%d]	:%s\n", i, data.sky[i]);
 	return (0);
 }

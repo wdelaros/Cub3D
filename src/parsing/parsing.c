@@ -54,17 +54,6 @@ static char	**get_map(char	*file)
 	return (map);
 }
 
-void	print_map(char **map)
-{
-	for (int i = 0; map && map[i]; i++)
-	{
-		if (!ft_strcmp(map[i], "\n"))
-			ft_printf("%s", map[i]);
-		else
-			ft_printf("%s\n", map[i]);
-	}
-}
-
 void	ft_parsing(char *file, t_data *data)
 {
 	char	**map;

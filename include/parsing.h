@@ -14,7 +14,6 @@
 
 //parsing.c
 void	ft_parsing(char *file, t_data *data);
-void	print_map(char **map);
 
 //parsing_data.c
 t_data	*get_sprite(char *sprite, char **map, t_data *data);

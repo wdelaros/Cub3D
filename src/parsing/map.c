@@ -28,7 +28,7 @@ static char	*change_space(char *str, char **map, t_data *data)
 		if (str[i] == TAB)
 			ft_exit_parsing("Invalid map", map, data);
 		if (str[i] == SP || str[i] == -62)
-			str[i] = '=';
+			str[i] = GS;
 		i++;
 	}
 	return (str);
@@ -53,6 +53,35 @@ static char	**cpy_map(char **map, char **map_cpy)
 	return (map);
 }
 
+static int	check_char_map(char **str)
+{
+	int	i;
+	int	j;
+	int	count;
+
+	i = 0;
+	count = 0;
+	while (str && str[i])
+	{
+		j = 0;
+		if (!ft_strcmp_until(str[i], "\0", GS))
+			return (-1);
+		while (str && str[i][j])
+		{
+			if (str[i][j] == GS || str[i][j] == '1' || str[i][j] == '0')
+				;
+			else if (str && str[i][j] && (str[i][j] == 'N' || str[i][j] == 'S' \
+			|| str[i][j] == 'E' || str[i][j] == 'W'))
+				count++;
+			else
+				return (-1);
+			j++;
+		}
+		i++;
+	}
+	return (count);
+}
+
 static t_data	*parse_map(t_data *data, char **map, int i)
 {
 	data->wall = cpy_map(NULL, map + i);
@@ -63,6 +92,10 @@ static t_data	*parse_map(t_data *data, char **map, int i)
 		// ft_printf("Cub3D map[%d] strlen:%d	: %s\n", i, ft_strlen(data->wall[i]), data->wall[i]);
 		i++;
 	}
+	if (check_char_map(data->wall) == -1)
+		ft_exit_parsing("invalid data in map", map, data);
+	else if (check_char_map(data->wall) != 1)
+		ft_exit_parsing("invalid number of player", map, data);
 	data->floor = cpy_map(NULL, data->wall);
 	data->sky = cpy_map(NULL, data->wall);
 	return (data);
