@@ -36,4 +36,8 @@ int		count_char(char *str, char c);
 int		ft_strcmp_until_space(const char *s1, const char *s2);
 char	ft_find_first_alphanum(char *str);
 
+void	free_image(t_data *data);
+
+mlx_t	*init_image(t_data *data);
+
 #endif

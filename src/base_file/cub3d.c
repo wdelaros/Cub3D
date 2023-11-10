@@ -9,23 +9,24 @@ int	main(int argc, char *argv[])
 		return (ft_dprintf(2, "too many argument or wrong file extension\n") \
 		, 1);
 	ft_parsing(argv[1], &data);
-	for (int i = 0; data.wall && data.wall[i]; i++)
-	{
-		ft_printf("data.wall[%d]	:", i);
-		for (int j = 0; i < data.wall[i][j]; j++)
-		{
-			if (data.wall[i][j] == GS)
-				ft_printf("=");
-			else
-				ft_printf("%c", data.wall[i][j]);
-		}
-		ft_printf("\n");
-	}
-	// ft_printf("\n");
-	// for (int i = 0; data.floor && data.floor[i]; i++)
-	// 	ft_printf("data.floor[%d]	:%s\n", i, data.floor[i]);
-	// ft_printf("\n");
-	// for (int i = 0; data.sky && data.sky[i]; i++)
-	// 	ft_printf("data.sky[%d]	:%s\n", i, data.sky[i]);
+	data.mlx = mlx_init(1024, 1080, "papelipoupi", false);
+	if (!data.mlx)
+		exit(EXIT_FAILURE);
+	data.mlx = init_image(&data);
+	mlx_loop(data.mlx);
+	// for (int i = 0; data.wall && data.wall[i]; i++)
+	// {
+	// 	ft_printf("data.wall[%d]	:", i);
+	// 	for (int j = 0; i < data.wall[i][j]; j++)
+	// 	{
+	// 		if (data.wall[i][j] == GS)
+	// 			ft_printf("=");
+	// 		else
+	// 			ft_printf("%c", data.wall[i][j]);
+	// 	}
+	// 	ft_printf("\n");
+	// }
+	free_image(&data);
+	mlx_terminate(data.mlx);
 	return (0);
 }

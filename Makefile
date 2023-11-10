@@ -34,6 +34,7 @@ RM			=	rm -rf
 #parsing
 SRCS		=	cub3d.c \
 \
+				init_image.c \
 				map.c \
 				map_utils.c \
 				parsing.c \
