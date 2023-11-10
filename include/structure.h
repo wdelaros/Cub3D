@@ -11,9 +11,15 @@ typedef struct s_sprite
 
 typedef struct s_pos
 {
-	float	x;
-	float	y;
+	double	x;
+	double	y;
 }	t_pos;
+
+typedef struct s_posi
+{
+	int	x;
+	int	y;
+}	t_posi;
 
 typedef struct s_color
 {
