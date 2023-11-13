@@ -9,7 +9,7 @@ char	*del_all_space(char *str)
 
 	i = 0;
 	j = 0;
-	space = 0;;
+	space = 0;
 	while (str && str[i])
 	{
 		if (str[i] == SP || str[i] == TAB)

@@ -39,7 +39,8 @@ static mlx_image_t	*get_mlx_img(t_data *data, char *path)
 
 mlx_t	*init_image(t_data *data)
 {
-	while (!data->north.img || !data->south.img || !data->east.img || !data->west.img)
+	while (!data->north.img || !data->south.img || !data->east.img \
+	|| !data->west.img)
 	{
 		if (!data->north.img)
 			data->north.img = get_mlx_img(data, data->north.path);

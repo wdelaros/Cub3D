@@ -26,15 +26,17 @@ void	ft_purge_parsing(t_data	*data);
 void	ft_exit_parsing(char *str_err, char **map, t_data *data);
 int		ft_strcmp_until(const char *s1, const char *s2, char c);
 char	*del_space(char *str);
+int		check_color(char *str);
 
 //map.c
 t_data	*parse_file(char **map, t_data *data);
 
 //map_utils
-int		check_color(char *str);
 int		count_char(char *str, char c);
 int		ft_strcmp_until_space(const char *s1, const char *s2);
 char	ft_find_first_alphanum(char *str);
+char	*change_space(char *str, char **map, t_data *data);
+char	**cpy_map(char **map, char **map_cpy);
 
 void	free_image(t_data *data);
 
