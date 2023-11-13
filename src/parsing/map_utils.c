@@ -50,7 +50,7 @@ char	*change_space(char *str, char **map, t_data *data)
 	{
 		if (str[i] == TAB)
 			ft_exit_parsing("Invalid map", map, data);
-		if (str[i] == SP || str[i] == -62)
+		if (str[i] == SP)
 			str[i] = GS;
 		i++;
 	}

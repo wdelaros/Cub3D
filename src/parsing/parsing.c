@@ -1,64 +1,62 @@
 #include "../../include/parsing.h"
 
-static char	*get_file(char	*file, int i)
+static char	**ft_arrayjoin(char **src, char *s)
 {
-	int		fd;
-	char	*str;
-	char	*strdef;
-
-	fd = open(file, O_RDONLY);
-	if (fd < 0)
-		return (ft_dprintf(2, "Error\nMap does not exist\n"), NULL);
-	str = "x";
-	strdef = NULL;
-	while (str)
-	{
-		str = get_next_line(fd);
-		if (str == NULL)
-			break ;
-		if (i == 0)
-			strdef = ft_strdup(str);
-		else if (!ft_strcmp(str, "\n"))
-			strdef = ft_ffstrjoin(strdef, ft_strjoin("\r", str));
-		else
-			strdef = ft_fstrjoin(strdef, str);
-		free(str);
-		i++;
-	}
-	close(fd);
-	return (strdef);
-}
-
-static char	**get_map(char	*file)
-{
+	char	**res;
 	int		i;
-	char	*str;
-	char	**map;
+	int		len;
 
-	i = -1;
-	str = get_file(file, 0);
-	if (!str)
+	len = ft_strlen_double(src);
+	res = ft_calloc(len + 2, sizeof(char *));
+	if (!res)
 		return (NULL);
-	map = ft_split(str, '\n');
-	if (!map)
-		return (ft_xfree(str), NULL);
-	str = ft_xfree(str);
-	while (++i && map && map[i])
+	i = 0;
+	if (!s)
+		return (src);
+	if (src)
 	{
-		if (!ft_strncmp(map[i], "\r", 1))
+		while (src[i])
 		{
-			free(map[i]);
-			map[i] = ft_strdup("\n");
+			res[i] = ft_strdup(src[i]);
+			i++;
 		}
 	}
-	return (map);
+	res[i] = ft_strdup(s);
+	ft_free_null(src);
+	return (res);
+}
+
+static char	**ft_loadmap(char *path)
+{
+	char	**res;
+	char	*added;
+	int		ffs;
+
+	ffs = open(path, O_RDONLY);
+	if (ffs < 0)
+		return (ft_dprintf(2, "Error\nMap does not exist\n"), NULL);
+	if (path)
+	{
+		res = NULL;
+		added = get_next_line(ffs);
+		while (added)
+		{
+			res = ft_arrayjoin(res, added);
+			added = ft_xfree(added);
+			added = get_next_line(ffs);
+		}
+		added = ft_xfree(added);
+		close(ffs);
+		return (res);
+	}
+	return (NULL);
 }
 
 void	ft_parsing(char *file, t_data *data)
 {
 	char	**map;
 
-	map = get_map(file);
+	map = ft_loadmap(file);
 	if (!map)
 		ft_exit_parsing("Empty map", map, data);
 	data = parse_file(map, data);

@@ -9,7 +9,7 @@ int	main(int argc, char *argv[])
 		return (ft_dprintf(2, "too many argument or wrong file extension\n") \
 		, 1);
 	ft_parsing(argv[1], &data);
-	// data.mlx = mlx_init(1024, 1080, "papelipoupi", false);
+	// data.mlx = mlx_init(1920, 1080, "papelipoupi", false);
 	// if (!data.mlx)
 	// 	exit(EXIT_FAILURE);
 	// data.mlx = init_image(&data);

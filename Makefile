@@ -41,6 +41,7 @@ SRCS		=	cub3d.c \
 				parsing_data.c \
 				parsing_data_utils.c \
 				parsing_utils.c \
+				valid_map.c \
 
 OBJS_DIR	=	obj/
 OBJS_LST	=	$(patsubst %.c, %.o, $(SRCS))

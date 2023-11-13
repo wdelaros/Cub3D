@@ -6,7 +6,7 @@
 /*   By: wdelaros <wdelaros@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 13:31:30 by wdelaros          #+#    #+#             */
-/*   Updated: 2023/09/28 08:41:09 by wdelaros         ###   ########.fr       */
+/*   Updated: 2023/11/13 08:41:09 by wdelaros         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,14 @@ size_t	ft_strlen(const char *s)
 	return (i - 1);
 }
 
-size_t	ft_strlen_double(const char **s)
+size_t	ft_strlen_double(char **s)
 {
 	size_t	i;
 
 	i = 0;
 	if (!s)
 		return (0);
-	while (s[i++])
-		continue ;
-	return (i - 1);
+	while (s[i])
+		i++;
+	return (i);
 }

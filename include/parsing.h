@@ -40,6 +40,8 @@ char	**cpy_map(char **map, char **map_cpy);
 
 void	free_image(t_data *data);
 
+void	valid_map(char **map, char **map_free, t_data *data);
+
 mlx_t	*init_image(t_data *data);
 
 #endif

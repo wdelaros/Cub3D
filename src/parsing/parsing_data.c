@@ -5,7 +5,7 @@ static int	set_color(int color, char **map, t_data *data)
 	if (color >= 0 && color <= 255)
 		return (color);
 	else
-		ft_exit_parsing("color out of range", map, data);
+		ft_exit_parsing("Color out of range", map, data);
 	return (0);
 }
 
@@ -15,7 +15,7 @@ static t_data	*get_c_floor(char *str, char **map, t_data *data)
 	char	*tmp;
 
 	if (count_char(str, ',') != 2)
-		ft_exit_parsing("wrong data for F", map, data);
+		ft_exit_parsing("Wrong data for F", map, data);
 	tmp = del_all_space(ft_strdup(str + 1));
 	split_color = ft_split(tmp, ',');
 	if (check_color(split_color[0]) || check_color(split_color[1]) \
@@ -40,7 +40,7 @@ static t_data	*get_c_sky(char *str, char **map, t_data *data)
 	char	*tmp;
 
 	if (count_char(str, ',') != 2)
-		ft_exit_parsing("wrong data for C", map, data);
+		ft_exit_parsing("Wrong data for C", map, data);
 	tmp = del_all_space(ft_strdup(str + 1));
 	split_color = ft_split(tmp, ',');
 	if (check_color(split_color[0]) || check_color(split_color[1]) \
