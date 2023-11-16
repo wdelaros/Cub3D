@@ -8,21 +8,21 @@ static int	check_arround_identifier(char **map, int i, int j)
 	if (i == 0 || j == 0 || i == (int)ft_strlen_double(map) - 1 \
 	|| j == (int)ft_strlen(map[i]) - 1)
 		return (1);
-	if (i > 0 && j < (int)ft_strlen(map[i - 1]) && (map[i - 1][j] != '0' \
+	if (j > (int)ft_strlen(map[i - 1]) || (i > 0 && (map[i - 1][j] != '0' \
 	&& map[i - 1][j] != '1' && map[i - 1][j] != 'N' && map[i - 1][j] != 'S' \
-	&& map[i - 1][j] != 'E' && map[i - 1][j] != 'W'))
+	&& map[i - 1][j] != 'E' && map[i - 1][j] != 'W')))
 		return (1);
-	if (i <= len - 1 && j < (int)ft_strlen(map[i + 1]) && (map[i - 1][j] != '0' \
-	&& map[i - 1][j] != '1' && map[i - 1][j] != 'N' && map[i - 1][j] != 'S' \
-	&& map[i - 1][j] != 'E' && map[i - 1][j] != 'W'))
+	if (j > (int)ft_strlen(map[i + 1]) || (i <= len - 1 \
+	&& (map[i + 1][j] != '0' && map[i + 1][j] != '1' && map[i + 1][j] != 'N' \
+	&& map[i + 1][j] != 'S' && map[i + 1][j] != 'E' && map[i + 1][j] != 'W')))
 		return (1);
-	if (j > 0 && (map[i - 1][j] != '0' && map[i - 1][j] != '1' \
-	&& map[i - 1][j] != 'N' && map[i - 1][j] != 'S' && map[i - 1][j] != 'E' \
-	&& map[i - 1][j] != 'W'))
+	if (j > 0 && (map[i][j - 1] != '0' && map[i][j - 1] != '1' \
+	&& map[i][j - 1] != 'N' && map[i][j - 1] != 'S' && map[i][j - 1] != 'E' \
+	&& map[i][j - 1] != 'W'))
 		return (1);
-	if (j <= (int)ft_strlen(map[i]) && (map[i - 1][j] != '0' \
-	&& map[i - 1][j] != '1' && map[i - 1][j] != 'N' && map[i - 1][j] != 'S' \
-	&& map[i - 1][j] != 'E' && map[i - 1][j] != 'W'))
+	if (j > (int)ft_strlen(map[i]) && (map[i][j + 1] != '0' \
+	&& map[i][j + 1] != '1' && map[i][j + 1] != 'N' && map[i][j + 1] != 'S' \
+	&& map[i][j + 1] != 'E' && map[i][j + 1] != 'W'))
 		return (1);
 	return (0);
 }
