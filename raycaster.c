@@ -1,11 +1,10 @@
-#include <math.h>
 #include "include/raycast.h"
 
 t_info	ft_init_info(void)
 {
 	t_info	info;
 
-	ft_bzero(&info,  sizeof(info));
+	ft_bzero(&info, sizeof(info));
 	info.pos.x = 22;
 	info.pos.y = 12;
 	info.dir.x = -1;
@@ -17,6 +16,8 @@ t_info	ft_init_info(void)
 	info.side = 0;
 	return (info);
 }
+
+
 
 void	ft_step_direction(t_info *info)
 {
@@ -150,7 +151,6 @@ void	ft_camera_right(t_info *in)
 			in->plane.y * sin(-in->speed.rota);
 	in->plane.y = old_plane * sin(-in->speed.rota) + \
 			in->plane.y * cos(-in->speed.rota);
-
 }
 
 void	ft_camera_left(t_info *in)
@@ -168,10 +168,9 @@ void	ft_camera_left(t_info *in)
 			in->plane.y * sin(in->speed.rota);
 	in->plane.y = old_plane * sin(in->speed.rota) + \
 			in->plane.y * cos(in->speed.rota);
-
 }
 
-void	ft_camera_move(t_info *in,  char move)
+void	ft_camera_move(t_info *in, char move)
 {
 	if (move == RIGHT)
 		ft_camera_right(in);
@@ -199,18 +198,53 @@ void	ft_raycast(t_data *data)
 		ft_set_texture(data);
 		ft_draw_vertical(x, draw_start, draw_end, color);
 	}
-	/*redraw();*/
+	ft_bzero(data->raycast_scene);
 	//move this out 
 	ft_hero_move();
 	ft_camera_move();
 }
 
-int main(int ac,  char **av)
+void	ft_verif_vert_line(t_info *info)
+{
+	if (y2 < y1)
+	{
+		y1 += y2;
+		y2 = y1 - y2;
+		y1 -= y2;
+	}
+	if (y2 < 0 || y1 >= SCREEN_HEIGHT || x < 0 || x >= SCREEN_WIDTH)
+		return 0;
+	if (y1 < 0)
+		y1 = 0;
+	if (y2 >= SCREEN_WIDTH)
+		y2 = SCREEN_HEIGHT - 1;
+}
+
+int	ft_vert_line(int x, t_data *data, t_color color)
+{
+	unsigned int	color_pixel;
+	unsigned int*	bufp;
+	int				y;
+
+	ft_verif_vert_line 
+	color_pixel= ft_rgba_to_uint(color.r, color.g, color.b);
+	bufp = (unsigned int*)data->map + y1 * SCREEN_WIDTH + x;
+	y = y1;
+	while (y <= y2)
+	{
+		*bufp = color_pixel;
+		bufp += (unsigned int)SCREEN_WIDTH;
+		y++;
+	}
+	return 1;
+}
+
+int main(int ac, char **av)
 {
 	t_info	info;
 
 	info = ft_init_info();
-	t_data.mlx = mlx_init(SCREEN_WIDTH,  SCREEN_HEIGHT,  "DINDE POMMES BACON",  false);
+	t_data.mlx = mlx_init(SCREEN_WIDTH, SCREEN_HEIGHT, "DINDE POMMES BACON", false);
 	while (hook)
 		ft_raycast();
 }

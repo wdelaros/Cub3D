@@ -1,6 +1,11 @@
 #ifndef ERROR_H
 # define ERROR_H
 
-void	ft_error_interrupt(t_data *game);
+#include <stdlib.h>
+#include "../libft/libft.h"
+
+#define ERROR_OUTPUT 2
+
+void	ft_error_interrupt(void);
 
 #endif

@@ -42,6 +42,8 @@ typedef struct s_data
 	t_sprite	south;
 	t_sprite	west;
 	t_sprite	east;
+	mlx_image_t	*back;
+	mlx_image_t	*raycast;
 }	t_data;
 
 #endif

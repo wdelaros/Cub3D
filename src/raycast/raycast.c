@@ -2,7 +2,26 @@
 
 void	ft_draw_floor_and_sky(t_data *game)
 {
+	int	i;
+	int	j;
 
+	i = 0;
+	while (i < HEIGHT / 2)
+	{
+		j = 0;
+		while (j < WIDTH)
+		{
+			mlx_put_pixel(game->);
+			j++;
+		}
+		i++;
+	}
+	while (i < HEIGHT)
+	{
+		while (j < WIDTH)
+		{
+		}
+	}
 }
 
 void	ft_raycast(t_data *game)
