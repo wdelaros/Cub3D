@@ -4,6 +4,7 @@
 		"sstream": "c",
 		"parsing.h": "c",
 		"libft.h": "c",
-		"structure.h": "c"
+		"structure.h": "c",
+		"stdint.h": "c"
 	}
 }

@@ -55,3 +55,4 @@ dkms.conf
 
 #exceptions
 !MLX42/
+!glfw/3.3.8/lib/*.dylib

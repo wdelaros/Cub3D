@@ -57,7 +57,7 @@ all: dir $(NAME)
 $(NAME): $(OBJS)
 	@cd LIBFT/ && make && cd ..
 	@printf "\n$(CYAN)MLX42: $(RESET)\n" && cd MLX42/ && make && cd ..
-	@$(CC) $(CFLAGS) $(OBJS) MLX42/libmlx42.a $(LDIR)$(LIBFT) -I include -lglfw -L "/Users/$(USER)/.brew/opt/glfw/lib/" -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJS) MLX42/libmlx42.a $(LDIR)$(LIBFT) -I include -lglfw -L "glfw/3.3.8/lib/" -o $(NAME)
 	@echo "$(ERASE_LINE)$(GREEN)✔︎ $(ITALIC)$(NAME) successfully compile.$(RESET)\
 	$(GREEN) ✔︎$(RESET)"
 
@@ -70,9 +70,6 @@ $(OBJS_DIR)%.o: src/*/%.c
 # create objects directory
 dir:
 	@mkdir -p $(OBJS_DIR)
-
-glfwdown:
-	brew install glfw
 
 # Removes objects
 clean:
