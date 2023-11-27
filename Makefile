@@ -33,8 +33,8 @@ RM			=	rm -rf
 #base_file
 #parsing
 SRCS		=	cub3d.c \
-\
 				parsing.c \
+\
 				map.c \
 
 OBJS_DIR	=	obj/
@@ -61,8 +61,8 @@ $(OBJS_DIR)%.o: src/*/%.c
 	$(RESET)"
 	@$(CC) $(CFLAGS) -c $< -o $@
 
-rc:
-	@$(CC) $(CFLAGS) src/raycast.c MLX42/libmlx42.a $(LDIR)$(LIBFT) -I include -lglfw -L "/Users/$(USER)/.brew/opt/glfw/lib/" -o $(NAME)
+test:
+	@$(CC) $(CFLAGS) src/raycaster.c src/error.c MLX42/libmlx42.a $(LDIR)$(LIBFT) -I include -lglfw -L "/Users/$(USER)/.brew/opt/glfw/lib/" -o $(NAME)
 
 # create objects directory
 dir:

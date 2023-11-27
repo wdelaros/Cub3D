@@ -15,11 +15,11 @@ typedef struct s_pos
 	double	y;
 }	t_pos;
 
-typedef struct s_posi
+typedef struct s_poi
 {
 	int	x;
 	int	y;
-}	t_posi;
+}	t_poi;
 
 typedef struct s_color
 {
@@ -29,9 +29,41 @@ typedef struct s_color
 	int		set;
 }	t_color;
 
+typedef struct s_speed
+{
+	double move;
+	double rota;
+}	t_speed;
+
+typedef struct s_info
+{
+	t_pos			sd;
+	t_pos			pd;
+	t_pos			pos;
+	t_pos			dir;
+	t_pos			plane;
+	t_pos			ray_dir;
+	t_pos			delta_dist;
+	t_poi			map;
+	t_poi			step;
+	double			pa;
+	double			time;
+	double			camera_x;
+	double			frametime;
+	double			wall_dist;
+	int				hit;
+	int				side;
+	int				line_h;
+	int				draw_end;
+	int				draw_start;
+	unsigned int	color;
+	t_speed	speed;
+}	t_info;
+
 typedef struct s_data
 {
 	mlx_t		*mlx;
+	t_info		*info;
 	char		**floor;
 	char		**wall;
 	char		**sky;
