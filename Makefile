@@ -57,7 +57,7 @@ all: dir $(NAME)
 $(NAME): $(OBJS)
 	@cd LIBFT/ && make && cd ..
 	@printf "\n$(CYAN)MLX42: $(RESET)\n" && cd MLX42/ && make && cd ..
-	@$(CC) $(CFLAGS) $(OBJS) MLX42/libmlx42.a $(LDIR)$(LIBFT) -I include -lglfw -L "glfw/3.3.8/lib/" -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJS) MLX42/libmlx42.a $(LDIR)$(LIBFT) -I include -lglfw -Lglfw/src -Xlinker -rpath -Xlinker glfw/src -o $(NAME)
 	@echo "$(ERASE_LINE)$(GREEN)✔︎ $(ITALIC)$(NAME) successfully compile.$(RESET)\
 	$(GREEN) ✔︎$(RESET)"
 
@@ -70,6 +70,14 @@ $(OBJS_DIR)%.o: src/*/%.c
 # create objects directory
 dir:
 	@mkdir -p $(OBJS_DIR)
+
+cmakedown:
+	cd cmake-3.27.8 && ./bootstrap --prefix=$(PWD) && make && make install/fast && cd ..
+
+glfwdown:
+	git clone https://github.com/glfw/glfw.git && cd glfw && \
+	../cmake-3.27.8/bin/cmake . -DGLFW_USE_CHDIR=TRUE -DGLFW_USE_MENUBAR=TRUE -DBUILD_SHARED_LIBS=TRUE && \
+	make && cd ..
 
 # Removes objects
 clean:
