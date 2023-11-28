@@ -67,17 +67,17 @@ $(OBJS_DIR)%.o: src/*/%.c
 	$(RESET)"
 	@$(CC) $(CFLAGS) -c $< -o $@
 
+cmakedown:
+	@cd cmake-3.27.8 && ./bootstrap --prefix=$(PWD) && make && make install/fast && cd ..
+
+glfwdown:
+	@git clone https://github.com/glfw/glfw.git && cd glfw && \
+	../cmake-3.27.8/bin/cmake . -DGLFW_USE_CHDIR=TRUE -DGLFW_USE_MENUBAR=TRUE -DBUILD_SHARED_LIBS=TRUE && \
+	make && cd ..
+
 # create objects directory
 dir:
 	@mkdir -p $(OBJS_DIR)
-
-cmakedown:
-	cd cmake-3.27.8 && ./bootstrap --prefix=$(PWD) && make && make install/fast && cd ..
-
-glfwdown:
-	git clone https://github.com/glfw/glfw.git && cd glfw && \
-	../cmake-3.27.8/bin/cmake . -DGLFW_USE_CHDIR=TRUE -DGLFW_USE_MENUBAR=TRUE -DBUILD_SHARED_LIBS=TRUE && \
-	make && cd ..
 
 # Removes objects
 clean:
