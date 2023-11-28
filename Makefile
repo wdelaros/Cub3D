@@ -47,19 +47,19 @@ OBJS_DIR	=	obj/
 OBJS_LST	=	$(patsubst %.c, %.o, $(SRCS))
 OBJS		=	$(addprefix $(OBJS_DIR), $(OBJS_LST))
 
-#------------------------------------------------------------------------------#
-#                                 TARGETS                                      #
-#------------------------------------------------------------------------------#
-
 BREW_PATH	:=	$(shell brew --prefix glfw)
 HOMEBREW	:=	$(HOME)/homebrew/opt/glfw
 BREW		:=	$(HOME)/.brew/opt/glfw
 
 ifeq ($(BREW_PATH), $(HOMEBREW))
-	BREW_PATH := $(HOME)/homebrew/opt/glfw
+	BREW_PATH := $(HOMEBREW)
 else ifeq ($(BREW_PATH), $(BREW))
-	BREW_PATH := $(HOME)/.brew/opt/glfw
+	BREW_PATH := $(BREW)
 endif
+
+#------------------------------------------------------------------------------#
+#                                 TARGETS                                      #
+#------------------------------------------------------------------------------#
 
 all: dependdown dir $(NAME)
 
@@ -89,9 +89,10 @@ dependdown:
 		if [[ "$$brewchoice" == "y" ]]; then \
 			rm -rf $$HOME/.brew && git clone --depth=1 https://github.com/Homebrew/brew $$HOME/.brew && \
 			echo 'export PATH=$$HOME/.brew/bin:$$PATH' >> $$HOME/.zshrc && source $$HOME/.zshrc && brew update; \
+			echo "$(GREEN)Brew successfully installed$(RESET)"; \
 		else \
 			echo "Exit"; \
-			exit 1; \
+			exit 2; \
 		fi \
 	fi
 	@if [ -d "$$HOME/homebrew/opt/glfw/lib" ] || [ -d "$$HOME/.brew/opt/glfw/lib" ]; then \
@@ -103,9 +104,10 @@ dependdown:
 		printf "$(RESET)"; \
 		if [[ "$$glfwchoice" == "y" ]]; then \
 			brew install glfw; \
+			echo "$(GREEN)glfw successfully installed$(RESET)"; \
 		else \
 			echo "Exit"; \
-			exit 1; \
+			exit 2; \
 		fi \
 	fi
 
