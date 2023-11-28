@@ -6,7 +6,7 @@
 /*   By: wdelaros <wdelaros@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 23:55:34 by W2Wizard          #+#    #+#             */
-/*   Updated: 2023/11/27 16:25:20 by wdelaros         ###   ########.fr       */
+/*   Updated: 2023/11/28 09:37:34 by wdelaros         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # if defined(__APPLE__)
 #  define GL_SILENCE_DEPRECATION
 # endif
-# include "../../../glfw/include/GLFW/glfw3.h"
+# include <GLFW/glfw3.h>
 # include <stdlib.h>
 # include <memory.h>
 # include <stdio.h>
