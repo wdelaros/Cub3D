@@ -1,3 +1,0 @@
-/Users/wdelaros/Desktop/Cub3D/cmake-3.27.8/Source/Checks/Curses-build/CMakeFiles/CheckCurses.dir
-/Users/wdelaros/Desktop/Cub3D/cmake-3.27.8/Source/Checks/Curses-build/CMakeFiles/edit_cache.dir
-/Users/wdelaros/Desktop/Cub3D/cmake-3.27.8/Source/Checks/Curses-build/CMakeFiles/rebuild_cache.dir

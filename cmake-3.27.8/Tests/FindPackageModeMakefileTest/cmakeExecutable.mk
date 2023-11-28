@@ -1,1 +1,0 @@
-CMAKE = "/Users/wdelaros/Desktop/Cub3D/cmake-3.27.8/bin/cmake"
