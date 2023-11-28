@@ -47,16 +47,6 @@ OBJS_DIR	=	obj/
 OBJS_LST	=	$(patsubst %.c, %.o, $(SRCS))
 OBJS		=	$(addprefix $(OBJS_DIR), $(OBJS_LST))
 
-BREW_PATH	:=	$(shell brew --prefix glfw)
-HOMEBREW	:=	$(HOME)/homebrew/opt/glfw
-BREW		:=	$(HOME)/.brew/opt/glfw
-
-ifeq ($(BREW_PATH), $(HOMEBREW))
-	BREW_PATH := $(HOMEBREW)
-else ifeq ($(BREW_PATH), $(BREW))
-	BREW_PATH := $(BREW)
-endif
-
 #------------------------------------------------------------------------------#
 #                                 TARGETS                                      #
 #------------------------------------------------------------------------------#
@@ -67,7 +57,7 @@ all: dependdown dir $(NAME)
 $(NAME): $(OBJS)
 	@cd LIBFT/ && make && cd ..
 	@printf "\n$(CYAN)MLX42: $(RESET)\n" && cd MLX42/ && make && cd ..
-	@$(CC) $(CFLAGS) $(OBJS) MLX42/libmlx42.a $(LDIR)$(LIBFT) -I include -lglfw -L "$(BREW_PATH)/lib/" -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJS) MLX42/libmlx42.a $(LDIR)$(LIBFT) -I include -lglfw -L "$(shell brew --prefix glfw)/lib/" -o $(NAME)
 	@echo "$(ERASE_LINE)$(GREEN)✔︎ $(ITALIC)$(NAME) successfully compile.$(RESET)\
 	$(GREEN) ✔︎$(RESET)"
 
@@ -77,34 +67,32 @@ $(OBJS_DIR)%.o: src/*/%.c
 	$(RESET)"
 	@$(CC) $(CFLAGS) -c $< -o $@
 
-#install brew and glfw
+# install brew and glfw
 dependdown:
-	@if [ -d "$$HOME/homebrew" ] || [ -d "$$HOME/.brew" ]; then \
-		echo "$(GREEN)Brew is already installed$(RESET)"; \
+	@if [ -x "$$HOME/homebrew/bin/brew" ] || [ -x "$$HOME/.brew/bin/brew" ]; then \
+		echo "$(GREEN)✔︎ $(ITALIC)Brew is already installed$(RESET)$(GREEN) ✔︎$(RESET)"; \
 	else \
-		printf "$(RED)"; \
-		echo "Brew not found"; \
+		echo "$(RED)✗ $(ITALIC)Brew not found$(RESET)$(RED) ✗"; \
 		read -p "Do you want to install brew? y/n: "  brewchoice; \
 		printf "$(RESET)"; \
-		if [[ "$$brewchoice" == "y" ]]; then \
+		if [ "$$brewchoice" = "y" ]; then \
 			rm -rf $$HOME/.brew && git clone --depth=1 https://github.com/Homebrew/brew $$HOME/.brew && \
 			echo 'export PATH=$$HOME/.brew/bin:$$PATH' >> $$HOME/.zshrc && source $$HOME/.zshrc && brew update; \
-			echo "$(GREEN)Brew successfully installed$(RESET)"; \
+			echo "$(GREEN)✔︎ $(ITALIC)Brew successfully installed$(RESET)$(GREEN) ✔︎$(RESET)"; \
 		else \
 			echo "Exit"; \
 			exit 2; \
 		fi \
 	fi
 	@if [ -d "$$HOME/homebrew/opt/glfw/lib" ] || [ -d "$$HOME/.brew/opt/glfw/lib" ]; then \
-		echo "$(GREEN)glfw is already installed$(RESET)"; \
+		echo "$(GREEN)✔︎ $(ITALIC)glfw is already installed$(RESET)$(GREEN) ✔︎$(RESET)"; \
 	else \
-		printf "$(RED)"; \
-		echo "glfw not found"; \
-		read -p "Do you want to install glfw? y/n: "  glfwchoice; \
+		echo "$(RED)✗ $(ITALIC)glfw not found$(RESET)$(RED) ✗"; \
+		read -p "Do you want to install glfw? y/n: " glfwchoice; \
 		printf "$(RESET)"; \
-		if [[ "$$glfwchoice" == "y" ]]; then \
+		if [ "$$glfwchoice" = "y" ]; then \
 			brew install glfw; \
-			echo "$(GREEN)glfw successfully installed$(RESET)"; \
+			echo "$(GREEN)✔︎ $(ITALIC)glfw successfully installed$(RESET)$(GREEN) ✔︎$(RESET)"; \
 		else \
 			echo "Exit"; \
 			exit 2; \
