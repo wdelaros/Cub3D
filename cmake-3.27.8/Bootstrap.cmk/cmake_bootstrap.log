@@ -1,19 +1,19 @@
 Checking for Clang toolchain
 Try: clang
-Line: clang  cmake_bootstrap_80449_test.c -o cmake_bootstrap_80449_test
+Line: clang  cmake_bootstrap_20226_test.c -o cmake_bootstrap_20226_test
 ----------  file   -----------------------
 int main() { return 0; }
 ------------------------------------------
 Test succeeded
 Try: clang++
-Line: clang++  cmake_bootstrap_80449_test.cpp -o cmake_bootstrap_80449_test
+Line: clang++  cmake_bootstrap_20226_test.cpp -o cmake_bootstrap_20226_test
 ----------  file   -----------------------
 int main() { return 0; }
 ------------------------------------------
 Test succeeded
 Checking whether 'clang   -framework CoreFoundation  ' works.
 Try: clang
-Line: clang   -framework CoreFoundation   cmake_bootstrap_80449_test.c -o cmake_bootstrap_80449_test
+Line: clang   -framework CoreFoundation   cmake_bootstrap_20226_test.c -o cmake_bootstrap_20226_test
 ----------  file   -----------------------
 
 #ifdef __cplusplus
@@ -45,7 +45,7 @@ int main(int argc, char* argv[])
 Test succeeded
 Checking whether 'clang++   -framework CoreFoundation  ' works.
 Try: clang++
-Line: clang++   -framework CoreFoundation   cmake_bootstrap_80449_test.cxx -o cmake_bootstrap_80449_test
+Line: clang++   -framework CoreFoundation   cmake_bootstrap_20226_test.cxx -o cmake_bootstrap_20226_test
 ----------  file   -----------------------
 
 #include <iostream>
@@ -126,20 +126,20 @@ int main()
 }
 
 ------------------------------------------
-cmake_bootstrap_80449_test.cxx:7:2: error: "Compiler is not in a mode aware of C++11."
+cmake_bootstrap_20226_test.cxx:7:2: error: "Compiler is not in a mode aware of C++11."
 #error "Compiler is not in a mode aware of C++11."
  ^
-cmake_bootstrap_80449_test.cxx:70:14: warning: in-class initialization of non-static data member is a C++11 extension [-Wc++11-extensions]
+cmake_bootstrap_20226_test.cxx:70:14: warning: in-class initialization of non-static data member is a C++11 extension [-Wc++11-extensions]
   int Member = 1;
              ^
-cmake_bootstrap_80449_test.cxx:74:3: warning: 'auto' type specifier is a C++11 extension [-Wc++11-extensions]
+cmake_bootstrap_20226_test.cxx:74:3: warning: 'auto' type specifier is a C++11 extension [-Wc++11-extensions]
   auto const c = std::unique_ptr<Class>(new Class);
   ^
 2 warnings and 1 error generated.
 Test failed to compile
 Checking whether 'clang++   -framework CoreFoundation -std=gnu++17 ' works.
 Try: clang++
-Line: clang++   -framework CoreFoundation -std=gnu++17  cmake_bootstrap_80449_test.cxx -o cmake_bootstrap_80449_test
+Line: clang++   -framework CoreFoundation -std=gnu++17  cmake_bootstrap_20226_test.cxx -o cmake_bootstrap_20226_test
 ----------  file   -----------------------
 
 #include <iostream>
@@ -224,7 +224,7 @@ int main()
 Test succeeded
 Checking whether 'clang++  -std=gnu++17    -framework CoreFoundation' supports 'make_unique'.
 Try: clang++
-Line: clang++  -std=gnu++17    -framework CoreFoundation /Users/wdelaros/Desktop/Cub3D/cmake-3.27.8/Source/Checks/cm_cxx_make_unique.cxx -o cmake_bootstrap_80449_test
+Line: clang++  -std=gnu++17    -framework CoreFoundation /Users/wdelaros/Desktop/Cub3D/cmake-3.27.8/Source/Checks/cm_cxx_make_unique.cxx -o cmake_bootstrap_20226_test
 ----------  file   -----------------------
 #include <memory>
 int main()
@@ -236,7 +236,7 @@ int main()
 Test succeeded
 Checking whether 'clang++  -std=gnu++17    -framework CoreFoundation' supports 'filesystem'.
 Try: clang++
-Line: clang++  -std=gnu++17    -framework CoreFoundation /Users/wdelaros/Desktop/Cub3D/cmake-3.27.8/Source/Checks/cm_cxx_filesystem.cxx -o cmake_bootstrap_80449_test
+Line: clang++  -std=gnu++17    -framework CoreFoundation /Users/wdelaros/Desktop/Cub3D/cmake-3.27.8/Source/Checks/cm_cxx_filesystem.cxx -o cmake_bootstrap_20226_test
 ----------  file   -----------------------
 
 #include <filesystem>
@@ -286,7 +286,7 @@ clang  -framework CoreFoundation    -o test test.c
 1
 make works
 Try: clang++
-Line: clang++  -std=gnu++17    -framework CoreFoundation -DTEST_KWSYS_CXX_HAS_SETENV /Users/wdelaros/Desktop/Cub3D/cmake-3.27.8/Source/kwsys/kwsysPlatformTestsCXX.cxx -o cmake_bootstrap_80449_test
+Line: clang++  -std=gnu++17    -framework CoreFoundation -DTEST_KWSYS_CXX_HAS_SETENV /Users/wdelaros/Desktop/Cub3D/cmake-3.27.8/Source/kwsys/kwsysPlatformTestsCXX.cxx -o cmake_bootstrap_20226_test
 ----------  file   -----------------------
 /* Distributed under the OSI-approved BSD 3-Clause License.  See accompanying
    file Copyright.txt or https://cmake.org/licensing#kwsys for details.  */
@@ -465,7 +465,7 @@ int main()
 ------------------------------------------
 Test succeeded
 Try: clang++
-Line: clang++  -std=gnu++17    -framework CoreFoundation -DTEST_KWSYS_CXX_HAS_UNSETENV /Users/wdelaros/Desktop/Cub3D/cmake-3.27.8/Source/kwsys/kwsysPlatformTestsCXX.cxx -o cmake_bootstrap_80449_test
+Line: clang++  -std=gnu++17    -framework CoreFoundation -DTEST_KWSYS_CXX_HAS_UNSETENV /Users/wdelaros/Desktop/Cub3D/cmake-3.27.8/Source/kwsys/kwsysPlatformTestsCXX.cxx -o cmake_bootstrap_20226_test
 ----------  file   -----------------------
 /* Distributed under the OSI-approved BSD 3-Clause License.  See accompanying
    file Copyright.txt or https://cmake.org/licensing#kwsys for details.  */
@@ -644,7 +644,7 @@ int main()
 ------------------------------------------
 Test succeeded
 Try: clang++
-Line: clang++  -std=gnu++17    -framework CoreFoundation -DTEST_KWSYS_CXX_HAS_ENVIRON_IN_STDLIB_H /Users/wdelaros/Desktop/Cub3D/cmake-3.27.8/Source/kwsys/kwsysPlatformTestsCXX.cxx -o cmake_bootstrap_80449_test
+Line: clang++  -std=gnu++17    -framework CoreFoundation -DTEST_KWSYS_CXX_HAS_ENVIRON_IN_STDLIB_H /Users/wdelaros/Desktop/Cub3D/cmake-3.27.8/Source/kwsys/kwsysPlatformTestsCXX.cxx -o cmake_bootstrap_20226_test
 ----------  file   -----------------------
 /* Distributed under the OSI-approved BSD 3-Clause License.  See accompanying
    file Copyright.txt or https://cmake.org/licensing#kwsys for details.  */
@@ -827,7 +827,7 @@ int main()
 1 error generated.
 Test failed to compile
 Try: clang++
-Line: clang++  -std=gnu++17    -framework CoreFoundation -DTEST_KWSYS_STL_HAS_WSTRING /Users/wdelaros/Desktop/Cub3D/cmake-3.27.8/Source/kwsys/kwsysPlatformTestsCXX.cxx -o cmake_bootstrap_80449_test
+Line: clang++  -std=gnu++17    -framework CoreFoundation -DTEST_KWSYS_STL_HAS_WSTRING /Users/wdelaros/Desktop/Cub3D/cmake-3.27.8/Source/kwsys/kwsysPlatformTestsCXX.cxx -o cmake_bootstrap_20226_test
 ----------  file   -----------------------
 /* Distributed under the OSI-approved BSD 3-Clause License.  See accompanying
    file Copyright.txt or https://cmake.org/licensing#kwsys for details.  */
@@ -1006,7 +1006,7 @@ int main()
 ------------------------------------------
 Test succeeded
 Try: clang++
-Line: clang++  -std=gnu++17    -framework CoreFoundation -DTEST_KWSYS_CXX_HAS_EXT_STDIO_FILEBUF_H /Users/wdelaros/Desktop/Cub3D/cmake-3.27.8/Source/kwsys/kwsysPlatformTestsCXX.cxx -o cmake_bootstrap_80449_test
+Line: clang++  -std=gnu++17    -framework CoreFoundation -DTEST_KWSYS_CXX_HAS_EXT_STDIO_FILEBUF_H /Users/wdelaros/Desktop/Cub3D/cmake-3.27.8/Source/kwsys/kwsysPlatformTestsCXX.cxx -o cmake_bootstrap_20226_test
 ----------  file   -----------------------
 /* Distributed under the OSI-approved BSD 3-Clause License.  See accompanying
    file Copyright.txt or https://cmake.org/licensing#kwsys for details.  */

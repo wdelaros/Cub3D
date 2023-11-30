@@ -68,7 +68,7 @@ $(OBJS_DIR)%.o: src/*/%.c
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 cmakedown:
-	@cd cmake-3.27.8 && ./bootstrap --prefix=$(PWD) && make && make install/fast && cd ..
+	@cd cmake-3.27.8 && ./bootstrap --prefix=$(PWD)/cmake-3.27.8 && make && make install/fast && cd ..
 
 glfwdown:
 	@git clone https://github.com/glfw/glfw.git && cd glfw && \
