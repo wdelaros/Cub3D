@@ -45,6 +45,7 @@
 	t_pos	v;
 }	t_info;*/
 
+void	ft_test(t_data *data);
 void	ft_raycast(t_data *game);
 void	ft_draw_floor_and_sky(t_data *game);
 

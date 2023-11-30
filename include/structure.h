@@ -56,8 +56,8 @@ typedef struct s_info
 	int				line_h;
 	int				draw_end;
 	int				draw_start;
-	unsigned int	color;
-	t_speed	speed;
+	uint32_t		color;
+	t_speed			speed;
 }	t_info;
 
 typedef struct s_data

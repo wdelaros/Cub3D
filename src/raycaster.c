@@ -12,7 +12,7 @@ int map[8][8]=
 {1,1,1,1,1,1,1,1},	
 };
 
-unsigned int	ft_rgba_to_uint(double r, double g, double b)
+uint32_t	ft_rgba_to_uint(double r, double g, double b)
 {
 	return ((r * 16777216) + (g * 65536) + (b * 256) + 0xFF);
 }
@@ -20,23 +20,6 @@ unsigned int	ft_rgba_to_uint(double r, double g, double b)
 double	ft_deg_to_rad(int angle)
 {
 	return (angle * M_PI / 180.0);
-}
-
-t_info	ft_init_info(void)
-{
-	t_info	info;
-
-	ft_bzero(&info, sizeof(info));
-	info.pos.x = 22;
-	info.pos.y = 12;
-	info.dir.x = -1;
-	info.dir.y = 0;
-	info.plane.x = 0;
-	info.plane.y = 1;
-	info.time = 0;
-	info.hit = 0;
-	info.side = 0;
-	return (info);
 }
 
 void	ft_step_direction(t_info *info)
@@ -119,7 +102,7 @@ void	ft_wall_distance(t_info *info)
 
 void	ft_hero_move(t_data *data, char move)
 {
-	int moved_x;
+	int	moved_x;
 	int	moved_y;
 	t_info	*info;
 
@@ -132,6 +115,8 @@ void	ft_hero_move(t_data *data, char move)
 			info->pos.x += info->dir.x * info->speed.move;
 		if (map[(int)info->pos.x][(int)moved_y] == false)
 			info->pos.y += info->dir.y * info->speed.move;
+		data->info->color = ft_rgba_to_uint(0.0, 210.0, 210.0);
+		ft_putendl_fd("up", ERROR_OUTPUT);
 	}
 	if (move == DOWN)
 	{
@@ -141,6 +126,8 @@ void	ft_hero_move(t_data *data, char move)
 			info->pos.x -= info->dir.x * info->speed.move;
 		if (map[(int)info->pos.x][(int)moved_y] == false)
 			info->pos.y -= info->dir.y * info->speed.move;
+		data->info->color = ft_rgba_to_uint(210.0, 93.0, 0.0);
+		ft_putendl_fd("down", ERROR_OUTPUT);
 	}
 }
 
@@ -159,6 +146,8 @@ void	ft_camera_right(t_info *in)
 			in->plane.y * sin(-in->speed.rota);
 	in->plane.y = old_plane * sin(-in->speed.rota) + \
 			in->plane.y * cos(-in->speed.rota);
+	in->color = ft_rgba_to_uint(222.0, 30.0, 210.0);
+	ft_putendl_fd("right", ERROR_OUTPUT);
 }
 
 void	ft_camera_left(t_info *in)
@@ -176,6 +165,8 @@ void	ft_camera_left(t_info *in)
 			in->plane.y * sin(in->speed.rota);
 	in->plane.y = old_plane * sin(in->speed.rota) + \
 			in->plane.y * cos(in->speed.rota);
+	in->color = ft_rgba_to_uint(222.0, 0.0, 0.0);
+	ft_putendl_fd("left", ERROR_OUTPUT);
 }
 
 void	ft_camera_move(t_data *data, char move)
@@ -196,29 +187,40 @@ void	ft_draw_vertical(int x, t_data *data)
 		mlx_put_pixel(data->raycast, x, y, ft_rgba_to_uint(221.0, 93.0, 0.0));
 		y++;
 	}
+	/*int w = SCREEN_WIDTH / 4;
+	int h = SCREEN_HEIGHT /4;
+	y = h;
+	while (y < h * 3)
+	{
+		x = w;
+		while (x < w * 3)
+		{
+			mlx_put_pixel(data->raycast, x, y, data->info->color);
+			x++;
+		}
+		y++;
+	}*/
 }
 
 void	ft_raycast(t_data *data)
 {
 	int	x;
-	t_info *info;
 
-	info = data->info;
 	x = 0;
 	while (x < SCREEN_WIDTH)
 	{
-		info->camera_x = 2 * x / (double)SCREEN_WIDTH - 1;
-		ft_raycast_calcs(info);
-		ft_step_direction(info);
+		data->info->camera_x = 2 * x / (double)SCREEN_WIDTH - 1;
+		ft_raycast_calcs(data->info);
+		ft_step_direction(data->info);
 		ft_dda(data);
-		//ft_wall_distance(info);
-		info->line_h = (int)(SCREEN_HEIGHT / info->wall_dist);
-		ft_draw_limits(info);
+		ft_wall_distance(data->info);
+		data->info->line_h = (int)(SCREEN_HEIGHT / data->info->wall_dist);
+		ft_draw_limits(data->info);
+		ft_dprintf(2, "x:%d\ndraw_start: %d\ndraw_end: %d\n", x, data->info->draw_start, data->info->draw_end);
 		//ft_set_texture(data);
 		ft_draw_vertical(x, data);
 		x++;
 	}
-	ft_bzero(data->raycast, sizeof(mlx_image_t));
 }
 
 void	ft_verif_vert_line(int x, t_info *info)
@@ -238,7 +240,7 @@ void	ft_verif_vert_line(int x, t_info *info)
 		info->draw_end = SCREEN_HEIGHT - 1;
 }
 
-int	ft_vert_line(int x, t_data *data, t_color color)
+/*int	ft_vert_line(int x, t_data *data, t_color color)
 {
 	unsigned int	color_pixel;
 	unsigned int*	bufp;
@@ -255,7 +257,7 @@ int	ft_vert_line(int x, t_data *data, t_color color)
 		y++;
 	}
 	return 1;
-}
+}*/
 
 static void	ft_hook(mlx_key_data_t keydata, void *param)
 {
@@ -275,7 +277,9 @@ static void	ft_hook(mlx_key_data_t keydata, void *param)
 		else if (keydata.key == MLX_KEY_RIGHT || keydata.key == MLX_KEY_D)
 			ft_camera_move(data, RIGHT);
 	}
+	ft_bzero(data->raycast->pixels, (SCREEN_WIDTH * SCREEN_HEIGHT * sizeof(int)));
 	ft_raycast(data);
+	//ft_test(data);
 }
 
 void	ft_sky_and_floor(t_data *data)
@@ -306,6 +310,26 @@ void	ft_sky_and_floor(t_data *data)
 	}
 }
 
+void	ft_test(t_data *data)
+{
+	int x;
+	int y;
+	int w = SCREEN_WIDTH / 4;
+	int h = SCREEN_HEIGHT / 4;
+
+	y = h;
+	while (y < h * 3)
+	{
+		x = w;
+		while (x < w * 3)
+		{
+			mlx_put_pixel(data->raycast, x, y, ft_rgba_to_uint(221.0, 93.0, 0.0));
+			x++;
+		}
+		y++;
+	}
+}
+
 void	ft_init(t_data *data)
 {
 	data->back = mlx_new_image(data->mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -315,6 +339,7 @@ void	ft_init(t_data *data)
 	data->info->pd.x = cos(data->info->pa) * data->info->speed.rota;
 	data->info->pd.y = sin(data->info->pa) * data->info->speed.rota;
 	ft_sky_and_floor(data);
+	//ft_test(data);
 	mlx_image_to_window(data->mlx, data->back, 0, 0);
 	mlx_image_to_window(data->mlx, data->raycast, 0, 0);
 }
@@ -322,8 +347,11 @@ void	ft_init(t_data *data)
 int main(void)
 {
 	t_data	data;
+	t_info	info;
 
 	ft_bzero(&data, sizeof(t_data));
+	ft_bzero(&info, sizeof(t_info));
+	data.info = &info;
 	data.mlx = mlx_init(SCREEN_WIDTH, SCREEN_HEIGHT, "DINDE POMME BACON", 0);
 	ft_init(&data);
 	mlx_key_hook(data.mlx, ft_hook, &data);
