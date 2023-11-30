@@ -22,6 +22,7 @@ double	ft_deg_to_rad(int angle)
 	return (angle * M_PI / 180.0);
 }
 
+//cal_side_dist_x & cal_side_dist_y
 void	ft_step_direction(t_info *info)
 {
 	if (info->ray_dir.x < 0)
@@ -46,6 +47,7 @@ void	ft_step_direction(t_info *info)
 	}
 }
 
+//dda
 void	ft_dda(t_data *data)
 {
 	t_info	*info;
@@ -70,6 +72,7 @@ void	ft_dda(t_data *data)
 	}
 }
 
+//calum_dist
 void	ft_draw_limits(t_info *info)
 {
 	info->draw_start = -(info->line_h) / 2 + SCREEN_HEIGHT / 2;
@@ -80,6 +83,7 @@ void	ft_draw_limits(t_info *info)
 		info->draw_end = SCREEN_HEIGHT - 1;
 }
 
+//
 void	ft_raycast_calcs(t_info *info)
 {
 	info->ray_dir.x = info->dir.x + info->plane.x * info->camera_x;
@@ -90,14 +94,14 @@ void	ft_raycast_calcs(t_info *info)
 	info->delta_dist.y = fabs(1 / info->ray_dir.y);
 }
 
+//wall_height
 void	ft_wall_distance(t_info *info)
 {
 	if (info->side == 0)
 		info->wall_dist = (info->sd.x - info->delta_dist.x);
 	else
 		info->wall_dist = (info->sd.y - info->delta_dist.y);
-	if (info->side == 1)
-		info->color = info->color / 2;
+	info->line_h = (int)SCREEN_HEIGHT / info->wall_dist;
 }
 
 void	ft_hero_move(t_data *data, char move)
@@ -210,13 +214,11 @@ void	ft_raycast(t_data *data)
 	while (x < SCREEN_WIDTH)
 	{
 		data->info->camera_x = 2 * x / (double)SCREEN_WIDTH - 1;
-		ft_raycast_calcs(data->info);
 		ft_step_direction(data->info);
+		ft_raycast_calcs(data->info);
 		ft_dda(data);
 		ft_wall_distance(data->info);
-		data->info->line_h = (int)(SCREEN_HEIGHT / data->info->wall_dist);
 		ft_draw_limits(data->info);
-		ft_dprintf(2, "x:%d\ndraw_start: %d\ndraw_end: %d\n", x, data->info->draw_start, data->info->draw_end);
 		//ft_set_texture(data);
 		ft_draw_vertical(x, data);
 		x++;
