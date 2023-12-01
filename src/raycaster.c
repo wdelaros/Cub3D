@@ -17,6 +17,12 @@ uint32_t	ft_rgba_to_uint(double r, double g, double b)
 	return ((r * 16777216) + (g * 65536) + (b * 256) + 0xFF);
 }
 
+void	ft_putnbrendl_fd(int nbr, int fd)
+{
+	ft_putnbr_fd(nbr, fd);
+	ft_putendl_fd("", fd);
+}
+
 double	ft_deg_to_rad(int angle)
 {
 	return (angle * M_PI / 180.0);
@@ -92,6 +98,7 @@ void	ft_raycast_calcs(t_info *info)
 	info->map.y = (int)info->pos.y;
 	info->delta_dist.x = fabs(1 / info->ray_dir.x);
 	info->delta_dist.y = fabs(1 / info->ray_dir.y);
+	info->hit = 0;
 }
 
 //wall_height
@@ -188,7 +195,7 @@ void	ft_draw_vertical(int x, t_data *data)
 	y = data->info->draw_start;
 	while (y < data->info->draw_end)
 	{
-		mlx_put_pixel(data->raycast, x, y, ft_rgba_to_uint(221.0, 93.0, 0.0));
+		mlx_put_pixel(data->raycast, x, y, data->info->color);
 		y++;
 	}
 	/*int w = SCREEN_WIDTH / 4;
@@ -340,6 +347,10 @@ void	ft_init(t_data *data)
 	data->info->speed.rota = data->mlx->delta_time * 3.0;
 	data->info->pd.x = cos(data->info->pa) * data->info->speed.rota;
 	data->info->pd.y = sin(data->info->pa) * data->info->speed.rota;
+	data->info->dir.x = 1;
+	data->info->dir.y = 0;
+	data->info->plane.x = 0;
+	data->info->plane.y = -0.66;
 	ft_sky_and_floor(data);
 	//ft_test(data);
 	mlx_image_to_window(data->mlx, data->back, 0, 0);
@@ -354,7 +365,7 @@ int main(void)
 	ft_bzero(&data, sizeof(t_data));
 	ft_bzero(&info, sizeof(t_info));
 	data.info = &info;
-	data.mlx = mlx_init(SCREEN_WIDTH, SCREEN_HEIGHT, "DINDE POMME BACON", 0);
+	data.mlx = mlx_init(SCREEN_WIDTH, SCREEN_HEIGHT, "DINDE POMME BACON FROMAGE SUISSE", 0);
 	ft_init(&data);
 	mlx_key_hook(data.mlx, ft_hook, &data);
 	mlx_loop(data.mlx);
