@@ -20,6 +20,7 @@
 # define PI 3.1415926535
 # define HALF_PI PI/2
 # define P3 3*PI/2
+# define HITBOX 0.35
 
 # ifndef ERROR_OUTPUT
 #  define ERROR_OUTPUT 2

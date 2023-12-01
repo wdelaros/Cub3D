@@ -89,9 +89,10 @@ void	ft_draw_limits(t_info *info)
 		info->draw_end = SCREEN_HEIGHT - 1;
 }
 
-//
-void	ft_raycast_calcs(t_info *info)
+//init_raycast
+void	ft_raycast_calcs(int x, t_info *info)
 {
+	info->camera_x = 2 * x / (double)SCREEN_WIDTH - 1;
 	info->ray_dir.x = info->dir.x + info->plane.x * info->camera_x;
 	info->ray_dir.y = info->dir.y + info->plane.y * info->camera_x;
 	info->map.x = (int)info->pos.x;
@@ -99,6 +100,7 @@ void	ft_raycast_calcs(t_info *info)
 	info->delta_dist.x = fabs(1 / info->ray_dir.x);
 	info->delta_dist.y = fabs(1 / info->ray_dir.y);
 	info->hit = 0;
+	info->side = 0;
 }
 
 //wall_height
@@ -122,10 +124,10 @@ void	ft_hero_move(t_data *data, char move)
 	{
 		moved_x = info->pos.x + info->dir.x * info->speed.move;
 		moved_y = info->pos.y + info->dir.y * info->speed.move;
-		if (map[(int)moved_x][(int)info->pos.y] == false)
-			info->pos.x += info->dir.x * info->speed.move;
-		if (map[(int)info->pos.x][(int)moved_y] == false)
-			info->pos.y += info->dir.y * info->speed.move;
+		if (map[(int)(moved_x + info->dir.x * HITBOX)][(int)info->pos.y] == false)
+			info->pos.x = moved_x;
+		if (map[(int)info->pos.x][(int)(moved_y + info->dir.y * HITBOX)] == false)
+			info->pos.y = moved_y;
 		data->info->color = ft_rgba_to_uint(0.0, 210.0, 210.0);
 		ft_putendl_fd("up", ERROR_OUTPUT);
 	}
@@ -133,13 +135,14 @@ void	ft_hero_move(t_data *data, char move)
 	{
 		moved_x = info->pos.x - info->dir.x * info->speed.move;
 		moved_y = info->pos.y - info->dir.y * info->speed.move;
-		if (map[(int)moved_x][(int)info->pos.y] == false)
-			info->pos.x -= info->dir.x * info->speed.move;
-		if (map[(int)info->pos.x][(int)moved_y] == false)
-			info->pos.y -= info->dir.y * info->speed.move;
+		if (map[(int)(moved_x + info->dir.x * -HITBOX)][(int)info->pos.y] == false)
+			info->pos.x = moved_x;
+		if (map[(int)info->pos.x][(int)(moved_y + info->dir.y * -HITBOX)] == false)
+			info->pos.y = moved_y;
 		data->info->color = ft_rgba_to_uint(210.0, 93.0, 0.0);
 		ft_putendl_fd("down", ERROR_OUTPUT);
 	}
+	data->info = info;
 }
 
 void	ft_camera_right(t_info *in)
@@ -188,6 +191,7 @@ void	ft_camera_move(t_data *data, char move)
 		ft_camera_left(data->info);
 }
 
+//draw_wall
 void	ft_draw_vertical(int x, t_data *data)
 {
 	int	y;
@@ -220,9 +224,8 @@ void	ft_raycast(t_data *data)
 	x = 0;
 	while (x < SCREEN_WIDTH)
 	{
-		data->info->camera_x = 2 * x / (double)SCREEN_WIDTH - 1;
+		ft_raycast_calcs(x, data->info);
 		ft_step_direction(data->info);
-		ft_raycast_calcs(data->info);
 		ft_dda(data);
 		ft_wall_distance(data->info);
 		ft_draw_limits(data->info);
@@ -339,6 +342,7 @@ void	ft_test(t_data *data)
 	}
 }
 
+
 void	ft_init(t_data *data)
 {
 	data->back = mlx_new_image(data->mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -350,7 +354,7 @@ void	ft_init(t_data *data)
 	data->info->dir.x = 1;
 	data->info->dir.y = 0;
 	data->info->plane.x = 0;
-	data->info->plane.y = -0.66;
+	data->info->plane.y = -0.85;
 	ft_sky_and_floor(data);
 	//ft_test(data);
 	mlx_image_to_window(data->mlx, data->back, 0, 0);
@@ -367,6 +371,8 @@ int main(void)
 	data.info = &info;
 	data.mlx = mlx_init(SCREEN_WIDTH, SCREEN_HEIGHT, "DINDE POMME BACON FROMAGE SUISSE", 0);
 	ft_init(&data);
+	data.info->pos.x = 1;
+	data.info->pos.y = 1;
 	mlx_key_hook(data.mlx, ft_hook, &data);
 	mlx_loop(data.mlx);
 	mlx_terminate(data.mlx);
