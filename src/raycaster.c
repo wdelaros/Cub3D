@@ -115,8 +115,8 @@ void	ft_wall_distance(t_info *info)
 
 void	ft_hero_move(t_data *data, char move)
 {
-	int	moved_x;
-	int	moved_y;
+	double	moved_x;
+	double	moved_y;
 	t_info	*info;
 
 	info = data->info;
@@ -347,8 +347,8 @@ void	ft_init(t_data *data)
 {
 	data->back = mlx_new_image(data->mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
 	data->raycast = mlx_new_image(data->mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
-	data->info->speed.move = data->mlx->delta_time * 5.0;
-	data->info->speed.rota = data->mlx->delta_time * 3.0;
+	data->info->speed.move =  0.5;
+	data->info->speed.rota = 0.3;
 	data->info->pd.x = cos(data->info->pa) * data->info->speed.rota;
 	data->info->pd.y = sin(data->info->pa) * data->info->speed.rota;
 	data->info->dir.x = 1;
@@ -371,8 +371,10 @@ int main(void)
 	data.info = &info;
 	data.mlx = mlx_init(SCREEN_WIDTH, SCREEN_HEIGHT, "DINDE POMME BACON FROMAGE SUISSE", 0);
 	ft_init(&data);
-	data.info->pos.x = 1;
-	data.info->pos.y = 1;
+	data.info->pos.x = 1.1;
+	data.info->pos.y = 1.1;
+	data.info->color = ft_rgba_to_uint(222.0, 30.0, 210.0);
+	ft_raycast(&data);
 	mlx_key_hook(data.mlx, ft_hook, &data);
 	mlx_loop(data.mlx);
 	mlx_terminate(data.mlx);
