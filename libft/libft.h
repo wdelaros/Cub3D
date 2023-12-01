@@ -6,7 +6,7 @@
 /*   By: wdelaros <wdelaros@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 12:30:31 by wdelaros          #+#    #+#             */
-/*   Updated: 2023/11/02 09:26:44 by wdelaros         ###   ########.fr       */
+/*   Updated: 2023/11/13 08:41:23 by wdelaros         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,9 @@ char	*ft_fstrjoin(char *s1, char *s2);
 
 int		ft_intlen(long int n, int base);
 int		ft_isfile(char *file);
+int		ft_isnumber(char *str);
 int		ft_strcmp(char *s1, char *s2);
+size_t	ft_strlen_double(char **s);
 
 long	ft_atol(const char *str);
 

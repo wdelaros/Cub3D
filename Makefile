@@ -33,9 +33,18 @@ RM			=	rm -rf
 #base_file
 #parsing
 SRCS		=	cub3d.c \
+				init_image.c \
+				map.c \
+				map_utils.c \
 				parsing.c \
 \
-				map.c \
+				parsing_data.c \
+				parsing_data_utils.c \
+				parsing_utils.c \
+				valid_map.c \
+\
+				raycast.c \
+				error.c
 
 OBJS_DIR	=	obj/
 OBJS_LST	=	$(patsubst %.c, %.o, $(SRCS))
@@ -45,13 +54,13 @@ OBJS		=	$(addprefix $(OBJS_DIR), $(OBJS_LST))
 #                                 TARGETS                                      #
 #------------------------------------------------------------------------------#
 
-all: dir $(NAME)
+all: dependdown dir $(NAME)
 
 # Generates output file
 $(NAME): $(OBJS)
 	@cd LIBFT/ && make && cd ..
 	@printf "\n$(CYAN)MLX42: $(RESET)\n" && cd MLX42/ && make && cd ..
-	@$(CC) $(CFLAGS) $(OBJS) MLX42/libmlx42.a $(LDIR)$(LIBFT) -I include -lglfw -L "/Users/$(USER)/.brew/opt/glfw/lib/" -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJS) MLX42/libmlx42.a $(LDIR)$(LIBFT) -I include -lglfw -L "$(shell brew --prefix glfw)/lib/" -o $(NAME)
 	@echo "$(ERASE_LINE)$(GREEN)✔︎ $(ITALIC)$(NAME) successfully compile.$(RESET)\
 	$(GREEN) ✔︎$(RESET)"
 
@@ -64,12 +73,41 @@ $(OBJS_DIR)%.o: src/*/%.c
 test:
 	@$(CC) $(CFLAGS) src/raycaster.c src/error.c MLX42/libmlx42.a $(LDIR)$(LIBFT) -I include -lglfw -L "/Users/$(USER)/.brew/opt/glfw/lib/" -o $(NAME)
 
+# install brew and glfw
+dependdown:
+	@if [ -x "$$HOME/homebrew/bin/brew" ] || [ -x "$$HOME/.brew/bin/brew" ]; then \
+		echo "$(GREEN)✔︎ $(ITALIC)Brew is already installed$(RESET)$(GREEN) ✔︎$(RESET)"; \
+	else \
+		echo "$(RED)✗ $(ITALIC)Brew not found$(RESET)$(RED) ✗"; \
+		read -p "Do you want to install brew? y/n: "  brewchoice; \
+		printf "$(RESET)"; \
+		if [ "$$brewchoice" = "y" ]; then \
+			rm -rf $$HOME/.brew && git clone --depth=1 https://github.com/Homebrew/brew $$HOME/.brew && \
+			echo 'export PATH=$$HOME/.brew/bin:$$PATH' >> $$HOME/.zshrc && source $$HOME/.zshrc && brew update; \
+			echo "$(GREEN)✔︎ $(ITALIC)Brew successfully installed$(RESET)$(GREEN) ✔︎$(RESET)"; \
+		else \
+			echo "Exit"; \
+			exit 2; \
+		fi \
+	fi
+	@if [ -d "$$HOME/homebrew/opt/glfw/lib" ] || [ -d "$$HOME/.brew/opt/glfw/lib" ]; then \
+		echo "$(GREEN)✔︎ $(ITALIC)glfw is already installed$(RESET)$(GREEN) ✔︎$(RESET)"; \
+	else \
+		echo "$(RED)✗ $(ITALIC)glfw not found$(RESET)$(RED) ✗"; \
+		read -p "Do you want to install glfw? y/n: " glfwchoice; \
+		printf "$(RESET)"; \
+		if [ "$$glfwchoice" = "y" ]; then \
+			brew install glfw; \
+			echo "$(GREEN)✔︎ $(ITALIC)glfw successfully installed$(RESET)$(GREEN) ✔︎$(RESET)"; \
+		else \
+			echo "Exit"; \
+			exit 2; \
+		fi \
+	fi
+
 # create objects directory
 dir:
 	@mkdir -p $(OBJS_DIR)
-
-glfwdown:
-	brew install glfw
 
 # Removes objects
 clean:

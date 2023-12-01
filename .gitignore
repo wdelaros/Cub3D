@@ -55,3 +55,4 @@ dkms.conf
 
 #exceptions
 !MLX42/
+!cmake-3.27.8/

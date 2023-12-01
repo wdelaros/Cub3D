@@ -6,7 +6,7 @@
 /*   By: wdelaros <wdelaros@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 06:46:56 by wdelaros          #+#    #+#             */
-/*   Updated: 2023/11/02 09:25:37 by wdelaros         ###   ########.fr       */
+/*   Updated: 2023/11/13 11:21:21 by wdelaros         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,15 @@ char	**ft_free_null(char **array)
 	size_t	i;
 
 	i = 0;
-	while (array[i])
+	if (array)
 	{
-		free(array[i]);
-		i++;
+		while (array[i])
+		{
+			free(array[i]);
+			i++;
+		}
+		free(array);
 	}
-	free(array);
 	return (NULL);
 }
 

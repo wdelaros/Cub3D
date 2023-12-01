@@ -9,19 +9,6 @@
 # include "../include/structure.h"
 # include "../MLX42/include/MLX42/MLX42.h"
 
-# define SCREEN_WIDTH 1024
-# define SCREEN_HEIGHT 768
-# define MAP_WIDTH 24
-# define MAP_HEIGHT 24
-# define UP 'u'
-# define DOWN 'd'
-# define LEFT 'l'
-# define RIGHT 'r'
-# define PI 3.1415926535
-# define HALF_PI PI/2
-# define P3 3*PI/2
-# define HITBOX 0.35
-
 # ifndef ERROR_OUTPUT
 #  define ERROR_OUTPUT 2
 # endif
