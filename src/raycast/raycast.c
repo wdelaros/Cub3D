@@ -73,7 +73,7 @@ void	ft_dda(t_data *data)
 			info->map.y += info->step.y;
 			info->side = 1;
 		}
-		if (map[info->map.x][info->map.y] > 0)
+		if (data->map[info->map.x][info->map.y] > 0)
 			info->hit = 1;
 	}
 }
@@ -124,22 +124,20 @@ void	ft_hero_move(t_data *data, char move)
 	{
 		moved_x = info->pos.x + info->dir.x * info->speed.move;
 		moved_y = info->pos.y + info->dir.y * info->speed.move;
-		if (map[(int)(moved_x + info->dir.x * HITBOX)][(int)info->pos.y] == false)
+		if (data->map[(int)(moved_x + info->dir.x * HITBOX)][(int)info->pos.y] == false)
 			info->pos.x = moved_x;
-		if (map[(int)info->pos.x][(int)(moved_y + info->dir.y * HITBOX)] == false)
+		if (data->map[(int)info->pos.x][(int)(moved_y + info->dir.y * HITBOX)] == false)
 			info->pos.y = moved_y;
-		data->info->color = ft_rgba_to_uint(0.0, 210.0, 210.0);
 		ft_putendl_fd("up", ERROR_OUTPUT);
 	}
 	if (move == DOWN)
 	{
 		moved_x = info->pos.x - info->dir.x * info->speed.move;
 		moved_y = info->pos.y - info->dir.y * info->speed.move;
-		if (map[(int)(moved_x + info->dir.x * -HITBOX)][(int)info->pos.y] == false)
+		if (data->map[(int)(moved_x + info->dir.x * -HITBOX)][(int)info->pos.y] == false)
 			info->pos.x = moved_x;
-		if (map[(int)info->pos.x][(int)(moved_y + info->dir.y * -HITBOX)] == false)
+		if (data->map[(int)info->pos.x][(int)(moved_y + info->dir.y * -HITBOX)] == false)
 			info->pos.y = moved_y;
-		data->info->color = ft_rgba_to_uint(210.0, 93.0, 0.0);
 		ft_putendl_fd("down", ERROR_OUTPUT);
 	}
 	data->info = info;
@@ -160,7 +158,6 @@ void	ft_camera_right(t_info *in)
 			in->plane.y * sin(-in->speed.rota);
 	in->plane.y = old_plane * sin(-in->speed.rota) + \
 			in->plane.y * cos(-in->speed.rota);
-	in->color = ft_rgba_to_uint(222.0, 30.0, 210.0);
 	ft_putendl_fd("right", ERROR_OUTPUT);
 }
 
@@ -179,7 +176,6 @@ void	ft_camera_left(t_info *in)
 			in->plane.y * sin(in->speed.rota);
 	in->plane.y = old_plane * sin(in->speed.rota) + \
 			in->plane.y * cos(in->speed.rota);
-	in->color = ft_rgba_to_uint(222.0, 0.0, 0.0);
 	ft_putendl_fd("left", ERROR_OUTPUT);
 }
 
@@ -305,7 +301,7 @@ void	ft_sky_and_floor(t_data *data)
 		x = 0;
 		while (x < SCREEN_WIDTH)
 		{
-			mlx_put_pixel(data->back, x, y, ft_rgba_to_uint(120.0, 60.0, 180.0));
+			mlx_put_pixel(data->back, x, y, ft_rgba_to_uint(data->c_sky.r, data->c_sky.g, data->c_sky.b));
 			x++;
 		}
 		y++;
@@ -315,7 +311,7 @@ void	ft_sky_and_floor(t_data *data)
 		x = 0;
 		while (x < SCREEN_WIDTH)
 		{
-			mlx_put_pixel(data->back, x, y, ft_rgba_to_uint(210.0, 186.0, 150.0));
+			mlx_put_pixel(data->back, x, y, ft_rgba_to_uint(data->c_floor.r, data->c_floor.g, data->c_floor.b));
 			x++;
 		}
 		y++;
@@ -351,10 +347,6 @@ void	ft_init(t_data *data)
 	data->info->speed.rota = 0.3;
 	data->info->pd.x = cos(data->info->pa) * data->info->speed.rota;
 	data->info->pd.y = sin(data->info->pa) * data->info->speed.rota;
-	data->info->dir.x = 1;
-	data->info->dir.y = 0;
-	data->info->plane.x = 0;
-	data->info->plane.y = -0.85;
 	ft_sky_and_floor(data);
 	//ft_test(data);
 	mlx_image_to_window(data->mlx, data->back, 0, 0);

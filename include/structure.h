@@ -77,6 +77,7 @@ typedef struct s_data
 {
 	mlx_t		*mlx;
 	t_info		*info;
+	int			**map;
 	char		**floor;
 	char		**wall;
 	char		**sky;
