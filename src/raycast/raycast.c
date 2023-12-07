@@ -73,7 +73,7 @@ void	ft_dda(t_data *data)
 			info->map.y += info->step.y;
 			info->side = 1;
 		}
-		if (map[info->map.x][info->map.y] > 0)
+		if (data->map[info->map.x][info->map.y] > 0)
 			info->hit = 1;
 	}
 }
@@ -304,7 +304,7 @@ void	ft_sky_and_floor(t_data *data)
 		x = 0;
 		while (x < SCREEN_WIDTH)
 		{
-			mlx_put_pixel(data->back, x, y, ft_rgba_to_uint(120.0, 60.0, 180.0));
+			mlx_put_pixel(data->back, x, y, ft_rgba_to_uint(data->c_sky.r, data->c_sky.g, data->c_sky.b));
 			x++;
 		}
 		y++;
@@ -314,7 +314,7 @@ void	ft_sky_and_floor(t_data *data)
 		x = 0;
 		while (x < SCREEN_WIDTH)
 		{
-			mlx_put_pixel(data->back, x, y, ft_rgba_to_uint(210.0, 186.0, 150.0));
+			mlx_put_pixel(data->back, x, y, ft_rgba_to_uint(data->c_floor.r, data->c_floor.g, data->c_floor.b));
 			x++;
 		}
 		y++;
@@ -350,10 +350,6 @@ void	ft_init(t_data *data)
 	data->info->speed.rota = 0.3;
 	data->info->pd.x = cos(data->info->pa) * data->info->speed.rota;
 	data->info->pd.y = sin(data->info->pa) * data->info->speed.rota;
-	data->info->dir.x = 1;
-	data->info->dir.y = 0;
-	data->info->plane.x = 0;
-	data->info->plane.y = -0.85;
 	ft_sky_and_floor(data);
 	mlx_image_to_window(data->mlx, data->back, 0, 0);
 	mlx_image_to_window(data->mlx, data->raycast, 0, 0);
