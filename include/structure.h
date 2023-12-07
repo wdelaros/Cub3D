@@ -18,8 +18,8 @@
 
 typedef struct s_sprite
 {
-	char		*path;
-	mlx_image_t	*img;
+	char	*path;
+	xpm_t	*img;
 }	t_sprite;
 
 typedef struct s_pos
