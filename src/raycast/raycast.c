@@ -113,68 +113,68 @@ void	ft_wall_distance(t_info *info)
 	info->line_h = (int)SCREEN_HEIGHT / info->wall_dist;
 }
 
-void	ft_move_up(t_info *info)
+void	ft_move_up(t_info *info, int **map2)
 {
 	double	moved_x;
 	double	moved_y;
 
 	moved_x = info->pos.x + info->dir.x * info->speed.move;
 	moved_y = info->pos.y + info->dir.y * info->speed.move;
-	if (map[(int)(moved_x + info->dir.x * HITBOX)][(int)info->pos.y] == false)
+	if (map2[(int)(moved_x + info->dir.x * HITBOX)][(int)info->pos.y] == false)
 		info->pos.x = moved_x;
-	if (map[(int)info->pos.x][(int)(moved_y + info->dir.y * HITBOX)] == false)
+	if (map2[(int)info->pos.x][(int)(moved_y + info->dir.y * HITBOX)] == false)
 		info->pos.y = moved_y;
 }
 
-void	ft_move_down(t_info *info)
+void	ft_move_down(t_info *info, int **map2)
 {
 	double	moved_x;
 	double	moved_y;
 
 	moved_x = info->pos.x - info->dir.x * info->speed.move;
 	moved_y = info->pos.y - info->dir.y * info->speed.move;
-	if (map[(int)(moved_x + info->dir.x * -HITBOX)][(int)info->pos.y] == false)
+	if (map2[(int)(moved_x + info->dir.x * -HITBOX)][(int)info->pos.y] == false)
 		info->pos.x = moved_x;
-	if (map[(int)info->pos.x][(int)(moved_y + info->dir.y * -HITBOX)] == false)
+	if (map2[(int)info->pos.x][(int)(moved_y + info->dir.y * -HITBOX)] == false)
 		info->pos.y = moved_y;
 }
 
-void ft_move_left(t_info *info)
+void ft_move_left(t_info *info, int **map2)
 {
 	double	moved_x;
 	double	moved_y;
 
 	moved_x = info->pos.x - info->dir.y * info->speed.move;
 	moved_y = info->pos.y + info->dir.x * info->speed.move;
-	if (map[(int)(moved_x + info->dir.y * HITBOX)][(int)info->pos.y] == false)
+	if (map2[(int)(moved_x + info->dir.y * HITBOX)][(int)info->pos.y] == false)
 		info->pos.x = moved_x;
-	if (map[(int)info->pos.x][(int)(moved_y + info->dir.x * HITBOX)] == false)
+	if (map2[(int)info->pos.x][(int)(moved_y + info->dir.x * HITBOX)] == false)
 		info->pos.y = moved_y;
 }
 
-void ft_move_right(t_info *info)
+void ft_move_right(t_info *info, int **map2)
 {
 	double	moved_x;
 	double	moved_y;
 
 	moved_x = info->pos.x + info->dir.y * info->speed.move;
 	moved_y = info->pos.y - info->dir.x * info->speed.move;
-	if (map[(int)(moved_x + info->dir.y * -HITBOX)][(int)info->pos.y] == false)
+	if (map2[(int)(moved_x + info->dir.y * -HITBOX)][(int)info->pos.y] == false)
 		info->pos.x = moved_x;
-	if (map[(int)info->pos.x][(int)(moved_y + info->dir.x * -HITBOX)] == false)
+	if (map2[(int)info->pos.x][(int)(moved_y + info->dir.x * -HITBOX)] == false)
 		info->pos.y = moved_y;
 }
 
 void	ft_hero_move(t_data *data, char move)
 {
 	if (move == UP)
-		ft_move_up(data->info);
+		ft_move_up(data->info, data->map);
 	else if (move == DOWN)
-		ft_move_down(data->info);
+		ft_move_down(data->info, data->map);
 	else if (move == LEFT)
-		ft_move_left(data->info);
+		ft_move_left(data->info, data->map);
 	else if (move == RIGHT)
-		ft_move_right(data->info);
+		ft_move_right(data->info, data->map);
 }
 
 void	ft_camera_right(t_info *in)

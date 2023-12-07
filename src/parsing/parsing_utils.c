@@ -6,10 +6,6 @@ void	ft_purge_parsing(t_data	*data)
 	ft_xfree(data->south.path);
 	ft_xfree(data->east.path);
 	ft_xfree(data->west.path);
-	if (data->floor)
-		ft_free_null(data->floor);
-	if (data->sky)
-		ft_free_null(data->sky);
 	if (data->wall)
 		ft_free_null(data->wall);
 }

@@ -1,10 +1,31 @@
 #include "../../include/cub3d.h"
 
-void	finalize_map(t_data *data)
+void	set_direction(t_data *data, double dir, double plane)
 {
-	int	x = 0;
-	int y = 0;
+	if (dir == 1)
+		data->info->dir.x = 1;
+	else if (dir == 2)
+		data->info->dir.y = 1;
+	else if (dir == -1)
+		data->info->dir.x = -1;
+	else if (dir == -2)
+		data->info->dir.y = -1;
+	if (plane == 1)
+		data->info->plane.x = 0.85;
+	else if (plane == 2)
+		data->info->plane.y = 0.85;
+	else if (plane == -1)
+		data->info->plane.x = -0.85;
+	else if (plane == -2)
+		data->info->plane.y = -0.85;
+}
 
+void	alloc_map(t_data *data)
+{
+	int	x;
+	int y;
+
+	x = 0;
 	while (data->wall[x])
 		x++;
 	data->map = ft_calloc(x + 1, sizeof(int *));
@@ -19,49 +40,38 @@ void	finalize_map(t_data *data)
 		data->map[x] = ft_calloc(y + 1, sizeof(int));
 		x++;
 	}
+}
+
+void	finalize_map(t_data *data)
+{
+	int	x;
+	int y;
+
 	x = 0;
+	alloc_map(data);
 	while (data->wall[x])
 	{
 		y = 0;
 		while (data->wall[x][y])
 		{
-			if (data->wall[x][y] == 'N' || data->wall[x][y] == 'S' || data->wall[x][y] == 'E' || data->wall[x][y] == 'W')
+			if (data->wall[x][y] == 'N' || data->wall[x][y] == 'S' \
+			|| data->wall[x][y] == 'E' || data->wall[x][y] == 'W')
 			{
-				data->info->pos.x = x + 0.1;
-				data->info->pos.y = y + 0.1;
+				data->info->pos.x = x + 0.5;
+				data->info->pos.y = y + 0.5;
 			}
 			if (data->wall[x][y] == 'N')
-			{
-				data->info->dir.x = 1;
-				data->info->dir.y = 0;
-				data->info->plane.x = 0;
-				data->info->plane.y = -0.85;
-			}
+				set_direction(data, -1, 2);
 			if (data->wall[x][y] == 'S')
-			{
-				data->info->dir.x = 1;
-				data->info->dir.y = 0;
-				data->info->plane.x = 0;
-				data->info->plane.y = -0.85;
-			}
+				set_direction(data, 1, -2);
 			if (data->wall[x][y] == 'E')
-			{
-				data->info->dir.x = 1;
-				data->info->dir.y = 0;
-				data->info->plane.x = 0;
-				data->info->plane.y = -0.85;
-			}
+				set_direction(data, 2, 1);
 			if (data->wall[x][y] == 'W')
-			{
-				data->info->dir.x = 1;
-				data->info->dir.y = 0;
-				data->info->plane.x = 0;
-				data->info->plane.y = -0.85;
-			}
+				set_direction(data, -2, -1);
 			if (ft_isdigit(data->wall[x][y]))
 				data->map[x][y] = data->wall[x][y] - 48;
 			else
-				data->map[x][y] = data->wall[x][y] = 0;
+				data->map[x][y] = 0;
 			y++;
 		}
 		x++;
@@ -93,15 +103,10 @@ int	main(int argc, char *argv[])
 	return (0);
 }
 
-	// for (int i = 0; data.wall && data.wall[i]; i++)
+	// for (int i = 0; data.map && data.map[i]; i++)
 	// {
 	// 	ft_printf("data.wall[%d]	:", i);
-	// 	for (int j = 0; i < data.wall[i][j]; j++)
-	// 	{
-	// 		if (data.wall[i][j] == GS)
-	// 			ft_printf("=");
-	// 		else
-	// 			ft_printf("%c", data.wall[i][j]);
-	// 	}
+	// 	for (int j = 0; data.wall[i][j]; j++)
+	// 		ft_printf("%d", data.map[i][j]);
 	// 	ft_printf("\n");
 	// }

@@ -63,8 +63,6 @@ static t_data	*parse_map(t_data *data, char **map, int i)
 	else if (check_char_map(data->wall) != 1)
 		ft_exit_parsing("Invalid number of player", map, data);
 	valid_map(data->wall, map, data);
-	data->floor = cpy_map(NULL, data->wall);
-	data->sky = cpy_map(NULL, data->wall);
 	return (data);
 }
 

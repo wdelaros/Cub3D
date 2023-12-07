@@ -10,9 +10,8 @@ void	free_image(t_data *data)
 		mlx_delete_image(data->mlx, data->east.img);
 	if (data->west.img)
 		mlx_delete_image(data->mlx, data->west.img);
-	ft_free_null(data->sky);
-	ft_free_null(data->floor);
 	ft_free_null(data->wall);
+	ft_free_null((char **)data->map);
 	ft_xfree(data->north.path);
 	ft_xfree(data->south.path);
 	ft_xfree(data->east.path);
