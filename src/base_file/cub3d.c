@@ -17,7 +17,6 @@ int	main(int argc, char *argv[])
 	ft_init(&data);
 	data.info->pos.x = 1.1;
 	data.info->pos.y = 1.1;
-	data.info->color = ft_rgba_to_uint(222.0, 30.0, 210.0);
 	ft_raycast(&data);
 	mlx_key_hook(data.mlx, ft_hook, &data);
 	mlx_loop(data.mlx);
