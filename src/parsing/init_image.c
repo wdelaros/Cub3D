@@ -20,19 +20,21 @@ void	free_image(t_data *data)
 
 static mlx_image_t	*get_mlx_img(t_data *data, char *path)
 {
-	mlx_texture_t	*texture;
+	mlx_texture_t	texture;
 	mlx_image_t		*img;
+	xpm_t			*xpm;
 
-	texture = mlx_load_png(path);
-	if (!texture)
+	xpm = mlx_load_xpm42(path);
+	if (!xpm)
 	{
 		free_image(data);
 		ft_dprintf(2, "Error\nWrong texture\n");
 		mlx_terminate(data->mlx);
 		exit (1);
 	}
-	img = mlx_texture_to_image(data->mlx, texture);
-	mlx_delete_texture(texture);
+	texture = xpm->texture;
+	img = mlx_texture_to_image(data->mlx, &texture);
+	mlx_delete_texture(&texture);
 	return (img);
 }
 
