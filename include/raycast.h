@@ -16,25 +16,11 @@
 #  define TERM_OUTPUT 1
 # endif
 
-/*typedef struct s_info
-{
-	int		dist_off;
-	int		mp;
-	int		r;
-	double	dist_h;
-	double	dist_v;
-	double	pa;
-	double	ra;
-	t_pos	off;
-	t_poi	map;
-	t_pos	pos;
-	t_pos	pd;
-	t_pos	r;
-	t_pos	v;
-}	t_info;*/
+# define BASE 4
 
 void	ft_test(t_data *data);
 void	ft_raycast(t_data *game);
 void	ft_draw_floor_and_sky(t_data *game);
+void	ft_draw_vertical(int x, t_data *data, xpm_t *wall, int **pxl);
 
 #endif

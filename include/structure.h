@@ -20,6 +20,7 @@ typedef struct s_sprite
 {
 	char	*path;
 	xpm_t	*img;
+	int		**pxl;
 }	t_sprite;
 
 typedef struct s_pos
@@ -51,7 +52,6 @@ typedef struct s_speed
 typedef struct s_info
 {
 	t_pos			sd;
-	t_pos			pd;
 	t_pos			pos;
 	t_pos			dir;
 	t_pos			plane;
@@ -60,6 +60,7 @@ typedef struct s_info
 	t_poi			map;
 	t_poi			step;
 	double			pa;
+	double			dist;
 	double			time;
 	double			camera_x;
 	double			frametime;
@@ -67,6 +68,7 @@ typedef struct s_info
 	int				hit;
 	int				side;
 	int				line_h;
+	int				wall_x;
 	int				draw_end;
 	int				draw_start;
 	uint32_t		color;

@@ -23,9 +23,67 @@ void	ft_putnbrendl_fd(int nbr, int fd)
 	ft_putendl_fd("", fd);
 }
 
-double	ft_deg_to_rad(int angle)
+int	**ft_xpm_convert(xpm_t *xpm)
 {
-	return (angle * M_PI / 180.0);
+	int	**conv;
+	int	x;
+	int	y;
+
+	conv = ft_calloc(xpm->texture.height + 1, sizeof(int *));
+	y = BASE - 1;
+	while (++y < (int)(xpm->texture.height + BASE))
+	{
+		x = BASE - 1;
+		conv[y - BASE] = ft_calloc(xpm->texture.width, sizeof(int));
+		while (++x < (int)(xpm->texture.width + BASE))
+		{
+			conv[y - BASE][x - BASE] = ft_rgba_to_uint(
+					xpm->texture.pixels[(xpm->texture.width * BASE \
+						* (y - BASE)) + (BASE * (x - BASE))],
+					xpm->texture.pixels[(xpm->texture.width * BASE \
+						* (y - BASE)) + (BASE * (x - BASE)) + 1],
+					xpm->texture.pixels[(xpm->texture.width * BASE \
+						* (y - BASE)) + (BASE * (x - BASE)) + 2]
+					/*xpm->texture.pixels[(xpm->texture.width * BASE \
+						* (y - BASE)) + (BASE * (x - BASE)) + 3]*/);
+		}
+	}
+	return (conv);
+}
+
+//find_hit_texture
+void	ft_calculate_wall_x(xpm_t *wall, t_data *data)
+{
+	double	hit;
+
+	hit = 0;
+	if (data->info->side == 0 || data->info->side == 2)
+		hit = data->info->pos.y + data->info->wall_dist * data->info->ray_dir.y;
+	else
+		hit = data->info->pos.x + data->info->wall_dist * data->info->ray_dir.x;
+	hit -= (int)hit;
+	data->info->wall_x = (int)(hit * (double)wall->texture.width);
+	if (data->info->side % 2 == 0 && data->info->ray_dir.x > 0)
+		data->info->wall_x = wall->texture.width - data->info->wall_x - 1;
+	if (data->info->side % 2 == 1 && data->info->ray_dir.y < 0)
+		data->info->wall_x = wall->texture.width - data->info->wall_x - 1;
+}
+
+//pick_texture
+void	ft_draw_texture(int x, t_data *data)
+{
+	t_sprite	sprite;
+
+	if (data->info->side == 0)
+		sprite = data->south;
+	else if (data->info->side == 2)
+		sprite = data->north;
+	else if (data->info->side == 1)
+		sprite = data->east;
+	else if (data->info->side == 3)
+		sprite = data->west;
+	ft_calculate_wall_x(sprite.img, data);
+	ft_draw_vertical(x, data, sprite.img, sprite.pxl);
 }
 
 //cal_side_dist_x & cal_side_dist_y
@@ -65,13 +123,19 @@ void	ft_dda(t_data *data)
 		{
 			info->sd.x += info->delta_dist.x;
 			info->map.x += info->step.x;
-			info->side = 0;
+			if (info->ray_dir.x > 0)
+				info->side = 0;
+			else
+				info->side = 2;
 		}
 		else
 		{
 			info->sd.y += info->delta_dist.y;
 			info->map.y += info->step.y;
-			info->side = 1;
+			if (info->ray_dir.y > 0)
+				info->side = 1;
+			else
+				info->side = 3;
 		}
 		if (data->map[info->map.x][info->map.y] > 0)
 			info->hit = 1;
@@ -219,15 +283,26 @@ void	ft_camera_move(t_data *data, char move)
 		ft_camera_left(data->info);
 }
 
-//draw_wall
-void	ft_draw_vertical(int x, t_data *data)
+//draw_wall || draw_vert_pix
+void	ft_draw_vertical(int x, t_data *data, xpm_t *wall, int **pxl)
 {
 	int	y;
+	int	wall_y;
 
 	y = data->info->draw_start;
+	data->info->dist = 1.0 * wall->texture.height / data->info->line_h;
+	data->info->pa = ((double)data->info->draw_start - (double)SCREEN_HEIGHT \
+			* 0.5 + (double)data->info->line_h * 0.5) * data->info->dist;
+	if (data->info->pa < 0)
+		data->info->pa = 0;
 	while (y < data->info->draw_end)
 	{
-		mlx_put_pixel(data->raycast, x, y, data->info->color);
+		wall_y = (int)data->info->pa;
+		if (data->info->pa > wall->texture.height - 1)
+			data->info->pa = wall->texture.height - 1;
+		data->info->pa += data->info->dist;
+		//mlx_put_pixel(data->raycast, x, y, data->info->color);
+		mlx_put_pixel(data->raycast, x, y, pxl[wall_y][data->info->wall_x]);
 		y++;
 	}
 }
@@ -244,27 +319,10 @@ void	ft_raycast(t_data *data)
 		ft_dda(data);
 		ft_wall_distance(data->info);
 		ft_draw_limits(data->info);
-		//ft_set_texture(data);
-		ft_draw_vertical(x, data);
+		ft_draw_texture(x, data);
+		//ft_draw_vertical(x, data);
 		x++;
 	}
-}
-
-void	ft_verif_vert_line(int x, t_info *info)
-{
-	if (info->draw_end < info->draw_start)
-	{
-		info->draw_start += info->draw_end;
-		info->draw_end = info->draw_start - info->draw_end;
-		info->draw_start -= info->draw_end;
-	}
-	if (info->draw_end < 0 || info->draw_start >= SCREEN_HEIGHT \
-		|| x < 0 || x >= SCREEN_WIDTH)
-		return ;
-	if (info->draw_start < 0)
-		info->draw_start = 0;
-	if (info->draw_end >= SCREEN_WIDTH)
-		info->draw_end = SCREEN_HEIGHT - 1;
 }
 
 void	ft_hook(mlx_key_data_t keydata, void *param)
@@ -282,7 +340,7 @@ void	ft_hook(mlx_key_data_t keydata, void *param)
 			ft_hero_move(data, DOWN);
 		else if (keydata.key == MLX_KEY_A)
 			ft_hero_move(data, LEFT);
-		else if (keydata.key == MLX_KEY_D)
+	else if (keydata.key == MLX_KEY_D)
 			ft_hero_move(data, RIGHT);
 		else if (keydata.key == MLX_KEY_LEFT)
 			ft_camera_move(data, LEFT);
@@ -321,38 +379,19 @@ void	ft_sky_and_floor(t_data *data)
 	}
 }
 
-void	ft_test(t_data *data)
-{
-	int x;
-	int y;
-	int w = SCREEN_WIDTH / 4;
-	int h = SCREEN_HEIGHT / 4;
-
-	y = h;
-	while (y < h * 3)
-	{
-		x = w;
-		while (x < w * 3)
-		{
-			mlx_put_pixel(data->raycast, x, y, ft_rgba_to_uint(221.0, 93.0, 0.0));
-			x++;
-		}
-		y++;
-	}
-}
-
-
 void	ft_init(t_data *data)
 {
 	data->back = mlx_new_image(data->mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
 	data->raycast = mlx_new_image(data->mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
 	data->info->speed.move =  0.5;
 	data->info->speed.rota = 0.3;
-	data->info->pd.x = cos(data->info->pa) * data->info->speed.rota;
-	data->info->pd.y = sin(data->info->pa) * data->info->speed.rota;
 	ft_sky_and_floor(data);
 	mlx_image_to_window(data->mlx, data->back, 0, 0);
 	mlx_image_to_window(data->mlx, data->raycast, 0, 0);
+	data->north.pxl = ft_xpm_convert(data->north.img);
+	data->south.pxl = ft_xpm_convert(data->south.img);
+	data->east.pxl = ft_xpm_convert(data->east.img);
+	data->west.pxl = ft_xpm_convert(data->west.img);
 	data->info->color = ft_rgba_to_uint(210.0, 93.0, 0.0);
 	//data->info->color = ft_rgba_to_uint(0.0, 231.0, 231.0);
 }

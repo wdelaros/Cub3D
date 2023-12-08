@@ -92,9 +92,9 @@ int	main(int argc, char *argv[])
 	ft_parsing(argv[1], &data);
 	data.mlx = mlx_init(SCREEN_WIDTH, SCREEN_HEIGHT, "DINDE POMME BACON FROMAGE SUISSE", 0);
 	finalize_map(&data);
-	// data.mlx = init_image(&data);
+	data.mlx = init_image(&data);
 	ft_init(&data);
-	data.info->color = ft_rgba_to_uint(210.0, 93.0, 0.0);
+	//data.info->color = ft_rgba_to_uint(210.0, 93.0, 0.0);
 	ft_raycast(&data);
 	mlx_key_hook(data.mlx, ft_hook, &data);
 	mlx_loop(data.mlx);
