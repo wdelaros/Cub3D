@@ -1,7 +1,7 @@
 SO ./assets/MARBLE3.xpm42
-NO ./assets/BIGDOOR6.xpm42
+NO ./assets/MARBLE2.xpm42
 WE ./assets/MARBLE2.xpm42
-EA ./assets/STONE2.xpm42
+EA ./assets/MARBLE3.xpm42
 
 F 210,186,150
 C 120,60,180

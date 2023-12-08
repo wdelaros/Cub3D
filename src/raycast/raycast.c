@@ -1,17 +1,5 @@
 #include "../../include/raycast.h"
 
-int map[8][8]=
-{
-{1,1,1,1,1,1,1,1},
-{1,0,1,0,0,0,0,1},
-{1,0,1,0,0,0,0,1},
-{1,0,1,0,0,0,0,1},
-{1,0,0,0,0,0,0,1},
-{1,0,0,0,0,1,0,1},
-{1,0,0,0,0,0,0,1},
-{1,1,1,1,1,1,1,1},	
-};
-
 uint32_t	ft_rgba_to_uint(double r, double g, double b)
 {
 	return ((r * 16777216) + (g * 65536) + (b * 256) + 0xFF);
@@ -43,15 +31,12 @@ int	**ft_xpm_convert(xpm_t *xpm)
 					xpm->texture.pixels[(xpm->texture.width * BASE \
 						* (y - BASE)) + (BASE * (x - BASE)) + 1],
 					xpm->texture.pixels[(xpm->texture.width * BASE \
-						* (y - BASE)) + (BASE * (x - BASE)) + 2]
-					/*xpm->texture.pixels[(xpm->texture.width * BASE \
-						* (y - BASE)) + (BASE * (x - BASE)) + 3]*/);
+						* (y - BASE)) + (BASE * (x - BASE)) + 2]);
 		}
 	}
 	return (conv);
 }
 
-//find_hit_texture
 void	ft_calculate_wall_x(xpm_t *wall, t_data *data)
 {
 	double	hit;
@@ -69,7 +54,6 @@ void	ft_calculate_wall_x(xpm_t *wall, t_data *data)
 		data->info->wall_x = wall->texture.width - data->info->wall_x - 1;
 }
 
-//pick_texture
 void	ft_draw_texture(int x, t_data *data)
 {
 	t_sprite	sprite;
@@ -86,7 +70,6 @@ void	ft_draw_texture(int x, t_data *data)
 	ft_draw_vertical(x, data, sprite.img, sprite.pxl);
 }
 
-//cal_side_dist_x & cal_side_dist_y
 void	ft_step_direction(t_info *info)
 {
 	if (info->ray_dir.x < 0)
@@ -111,7 +94,6 @@ void	ft_step_direction(t_info *info)
 	}
 }
 
-//dda
 void	ft_dda(t_data *data)
 {
 	while (data->info->hit == 0)
@@ -139,14 +121,13 @@ void	ft_dda(t_data *data)
 	}
 }
 
-//calum_dist
 void	ft_draw_limits(t_info *info)
 {
 	if (info->side % 2 == 0)
 		info->wall_dist = (info->sd.x - info->delta_dist.x);
 	else
 		info->wall_dist = (info->sd.y - info->delta_dist.y);
-	info->line_h = (int)(SCREEN_HEIGHT / info->wall_dist)
+	info->line_h = (int)(SCREEN_HEIGHT / info->wall_dist);
 	info->draw_start = -(info->line_h) / 2 + SCREEN_HEIGHT / 2;
 	info->draw_end = info->line_h / 2 + SCREEN_HEIGHT / 2;
 	if (info->draw_start < 0)
@@ -155,7 +136,6 @@ void	ft_draw_limits(t_info *info)
 		info->draw_end = SCREEN_HEIGHT - 1;
 }
 
-//init_raycast
 void	ft_raycast_calcs(int x, t_info *info)
 {
 	info->camera_x = 2 * x / (double)SCREEN_WIDTH - 1;
@@ -169,7 +149,6 @@ void	ft_raycast_calcs(int x, t_info *info)
 	info->side = 0;
 }
 
-//wall_height
 void	ft_wall_distance(t_info *info)
 {
 	if (info->side == 0)
@@ -179,55 +158,55 @@ void	ft_wall_distance(t_info *info)
 	info->line_h = (int)SCREEN_HEIGHT / info->wall_dist;
 }
 
-void	ft_move_up(t_info *info, int **map2)
+void	ft_move_up(t_info *info, int **map)
 {
 	double	moved_x;
 	double	moved_y;
 
 	moved_x = info->pos.x + info->dir.x * info->speed.move;
 	moved_y = info->pos.y + info->dir.y * info->speed.move;
-	if (map2[(int)(moved_x + info->dir.x * HITBOX)][(int)info->pos.y] == false)
+	if (map[(int)(moved_x + info->dir.x * HITBOX)][(int)info->pos.y] == false)
 		info->pos.x = moved_x;
-	if (map2[(int)info->pos.x][(int)(moved_y + info->dir.y * HITBOX)] == false)
+	if (map[(int)info->pos.x][(int)(moved_y + info->dir.y * HITBOX)] == false)
 		info->pos.y = moved_y;
 }
 
-void	ft_move_down(t_info *info, int **map2)
+void	ft_move_down(t_info *info, int **map)
 {
 	double	moved_x;
 	double	moved_y;
 
 	moved_x = info->pos.x - info->dir.x * info->speed.move;
 	moved_y = info->pos.y - info->dir.y * info->speed.move;
-	if (map2[(int)(moved_x + info->dir.x * -HITBOX)][(int)info->pos.y] == false)
+	if (map[(int)(moved_x + info->dir.x * -HITBOX)][(int)info->pos.y] == false)
 		info->pos.x = moved_x;
-	if (map2[(int)info->pos.x][(int)(moved_y + info->dir.y * -HITBOX)] == false)
+	if (map[(int)info->pos.x][(int)(moved_y + info->dir.y * -HITBOX)] == false)
 		info->pos.y = moved_y;
 }
 
-void ft_move_left(t_info *info, int **map2)
+void ft_move_left(t_info *info, int **map)
 {
 	double	moved_x;
 	double	moved_y;
 
 	moved_x = info->pos.x - info->dir.y * info->speed.move;
 	moved_y = info->pos.y + info->dir.x * info->speed.move;
-	if (map2[(int)(moved_x + info->dir.y * HITBOX)][(int)info->pos.y] == false)
+	if (map[(int)(moved_x + info->dir.y * HITBOX)][(int)info->pos.y] == false)
 		info->pos.x = moved_x;
-	if (map2[(int)info->pos.x][(int)(moved_y + info->dir.x * HITBOX)] == false)
+	if (map[(int)info->pos.x][(int)(moved_y + info->dir.x * HITBOX)] == false)
 		info->pos.y = moved_y;
 }
 
-void ft_move_right(t_info *info, int **map2)
+void ft_move_right(t_info *info, int **map)
 {
 	double	moved_x;
 	double	moved_y;
 
 	moved_x = info->pos.x + info->dir.y * info->speed.move;
 	moved_y = info->pos.y - info->dir.x * info->speed.move;
-	if (map2[(int)(moved_x + info->dir.y * -HITBOX)][(int)info->pos.y] == false)
+	if (map[(int)(moved_x + info->dir.y * -HITBOX)][(int)info->pos.y] == false)
 		info->pos.x = moved_x;
-	if (map2[(int)info->pos.x][(int)(moved_y + info->dir.x * -HITBOX)] == false)
+	if (map[(int)info->pos.x][(int)(moved_y + info->dir.x * -HITBOX)] == false)
 		info->pos.y = moved_y;
 }
 
@@ -303,7 +282,6 @@ void	ft_draw_vertical(int x, t_data *data, xpm_t *wall, int **pxl)
 		if (data->info->pa > wall->texture.height - 1)
 			data->info->pa = wall->texture.height - 1;
 		data->info->pa += data->info->dist;
-		//mlx_put_pixel(data->raycast, x, y, data->info->color);
 		mlx_put_pixel(data->raycast, x, y, pxl[wall_y][data->info->wall_x]);
 		y++;
 	}
@@ -322,7 +300,6 @@ void	ft_raycast(t_data *data)
 		ft_wall_distance(data->info);
 		ft_draw_limits(data->info);
 		ft_draw_texture(x, data);
-		//ft_draw_vertical(x, data);
 		x++;
 	}
 }
@@ -353,17 +330,42 @@ void	ft_hook(mlx_key_data_t keydata, void *param)
 	ft_raycast(data);
 }
 
-void	ft_sky()
+void	ft_sky(t_data *data)
 {	
+	int	x;
+	int	y;
+
+	y = 0;
 	while (y < SCREEN_HEIGHT / 2)
 	{
 		x = 0;
 		while (x < SCREEN_WIDTH)
 		{
 			mlx_put_pixel(data->back, x, y, \
-					ft_rgba_to_uint(data->c_sky.r, 
-							data->c_sky.g, 
+					ft_rgba_to_uint(data->c_sky.r,
+							data->c_sky.g,
 							data->c_sky.b));
+			x++;
+		}
+		y++;
+	}
+}
+
+void	ft_floor(t_data *data)
+{
+	int	x;
+	int	y;
+
+	y = SCREEN_HEIGHT / 2;
+	while (y < SCREEN_HEIGHT)
+	{
+		x = 0;
+		while (x < SCREEN_WIDTH)
+		{
+			mlx_put_pixel(data->back, x, y, \
+					ft_rgba_to_uint(data->c_floor.r,
+						data->c_floor.g,
+						data->c_floor.b));
 			x++;
 		}
 		y++;
@@ -372,22 +374,8 @@ void	ft_sky()
 
 void	ft_sky_and_floor(t_data *data)
 {
-	int	x;
-	int	y;
-
-	y = 0;
-
-	while (y < SCREEN_HEIGHT)
-	{
-		x = 0;
-		while (x < SCREEN_WIDTH)
-		{
-			mlx_put_pixel(data->back, x, y, \
-					ft_rgba_to_uint(data->c_floor.r, data->c_floor.g, data->c_floor.b));
-			x++;
-		}
-		y++;
-	}
+	ft_sky(data);
+	ft_floor(data);
 }
 
 void	ft_init(t_data *data)
@@ -403,6 +391,4 @@ void	ft_init(t_data *data)
 	data->south.pxl = ft_xpm_convert(data->south.img);
 	data->east.pxl = ft_xpm_convert(data->east.img);
 	data->west.pxl = ft_xpm_convert(data->west.img);
-	data->info->color = ft_rgba_to_uint(210.0, 93.0, 0.0);
-	//data->info->color = ft_rgba_to_uint(0.0, 231.0, 231.0);
 }
