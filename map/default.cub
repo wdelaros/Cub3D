@@ -1,10 +1,10 @@
-SO ./assets/MARBLE3.xpm42
-NO ./assets/MARBLE2.xpm42
-WE ./assets/MARBLE2.xpm42
-EA ./assets/MARBLE3.xpm42
-
 F 210,186,150
 C 120,60,180
+NO ./assets/MARBLE3.xpm42
+WE ./assets/MARBLE2.xpm42
+EA ./assets/MARBLE2.xpm42
+SO ./assets/MARBLE3.xpm42
+
 
         1111111111111111111111111
         1000000000110000000000001
