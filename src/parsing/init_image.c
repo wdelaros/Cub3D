@@ -12,6 +12,10 @@ void	free_image(t_data *data)
 		mlx_delete_xpm42(data->west.img);
 	ft_free_null(data->wall);
 	ft_free_null((char **)data->map);
+	ft_free_null((char **)data->north.pxl);
+	ft_free_null((char **)data->south.pxl);
+	ft_free_null((char **)data->east.pxl);
+	ft_free_null((char **)data->west.pxl);
 	ft_xfree(data->north.path);
 	ft_xfree(data->south.path);
 	ft_xfree(data->east.path);
