@@ -43,8 +43,14 @@ SRCS		=	cub3d.c \
 				parsing_utils.c \
 				valid_map.c \
 \
+				calculate.c\
 				raycast.c \
-				error.c
+				camera.c \
+				error.c \
+				utils.c \
+				move.c \
+				init.c \
+				draw.c \
 
 OBJS_DIR	=	obj/
 OBJS_LST	=	$(patsubst %.c, %.o, $(SRCS))
