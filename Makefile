@@ -60,7 +60,7 @@ all: dependdown dir $(NAME)
 $(NAME): $(OBJS)
 	@cd LIBFT/ && make && cd ..
 	@printf "\n$(CYAN)MLX42: $(RESET)\n" && cd MLX42/ && make && cd ..
-	@$(CC) $(CFLAGS) $(OBJS) MLX42/libmlx42.a $(LDIR)$(LIBFT) -I include -lglfw -L "$(shell brew --prefix glfw)/lib/" -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJS) MLX42/libmlx42.a $(LDIR)$(LIBFT) -I include -lglfw -L "$(shell brew --prefix glfw)/lib/" -o $(NAME) -g
 	@echo "$(ERASE_LINE)$(GREEN)✔︎ $(ITALIC)$(NAME) successfully compile.$(RESET)\
 	$(GREEN) ✔︎$(RESET)"
 

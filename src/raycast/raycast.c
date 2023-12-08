@@ -114,37 +114,39 @@ void	ft_step_direction(t_info *info)
 //dda
 void	ft_dda(t_data *data)
 {
-	t_info	*info;
-
-	info = data->info;
-	while (info->hit == 0)
+	while (data->info->hit == 0)
 	{
-		if (info->sd.x < info->sd.y)
+		if (data->info->sd.x < data->info->sd.y)
 		{
-			info->sd.x += info->delta_dist.x;
-			info->map.x += info->step.x;
-			if (info->ray_dir.x > 0)
-				info->side = 0;
+			data->info->sd.x += data->info->delta_dist.x;
+			data->info->map.x += data->info->step.x;
+			if (data->info->ray_dir.x > 0)
+				data->info->side = 0;
 			else
-				info->side = 2;
+				data->info->side = 2;
 		}
 		else
 		{
-			info->sd.y += info->delta_dist.y;
-			info->map.y += info->step.y;
-			if (info->ray_dir.y > 0)
-				info->side = 1;
+			data->info->sd.y += data->info->delta_dist.y;
+			data->info->map.y += data->info->step.y;
+			if (data->info->ray_dir.y > 0)
+				data->info->side = 1;
 			else
-				info->side = 3;
+				data->info->side = 3;
 		}
-		if (data->map[info->map.x][info->map.y] > 0)
-			info->hit = 1;
+		if (data->map[data->info->map.x][data->info->map.y] > 0)
+			data->info->hit = 1;
 	}
 }
 
 //calum_dist
 void	ft_draw_limits(t_info *info)
 {
+	if (info->side % 2 == 0)
+		info->wall_dist = (info->sd.x - info->delta_dist.x);
+	else
+		info->wall_dist = (info->sd.y - info->delta_dist.y);
+	info->line_h = (int)(SCREEN_HEIGHT / info->wall_dist)
 	info->draw_start = -(info->line_h) / 2 + SCREEN_HEIGHT / 2;
 	info->draw_end = info->line_h / 2 + SCREEN_HEIGHT / 2;
 	if (info->draw_start < 0)
@@ -351,28 +353,37 @@ void	ft_hook(mlx_key_data_t keydata, void *param)
 	ft_raycast(data);
 }
 
+void	ft_sky()
+{	
+	while (y < SCREEN_HEIGHT / 2)
+	{
+		x = 0;
+		while (x < SCREEN_WIDTH)
+		{
+			mlx_put_pixel(data->back, x, y, \
+					ft_rgba_to_uint(data->c_sky.r, 
+							data->c_sky.g, 
+							data->c_sky.b));
+			x++;
+		}
+		y++;
+	}
+}
+
 void	ft_sky_and_floor(t_data *data)
 {
 	int	x;
 	int	y;
 
 	y = 0;
-	while (y < SCREEN_HEIGHT / 2)
-	{
-		x = 0;
-		while (x < SCREEN_WIDTH)
-		{
-			mlx_put_pixel(data->back, x, y, ft_rgba_to_uint(data->c_sky.r, data->c_sky.g, data->c_sky.b));
-			x++;
-		}
-		y++;
-	}
+
 	while (y < SCREEN_HEIGHT)
 	{
 		x = 0;
 		while (x < SCREEN_WIDTH)
 		{
-			mlx_put_pixel(data->back, x, y, ft_rgba_to_uint(data->c_floor.r, data->c_floor.g, data->c_floor.b));
+			mlx_put_pixel(data->back, x, y, \
+					ft_rgba_to_uint(data->c_floor.r, data->c_floor.g, data->c_floor.b));
 			x++;
 		}
 		y++;
