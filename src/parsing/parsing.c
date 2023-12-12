@@ -6,13 +6,13 @@
 /*   By: wdelaros <wdelaros@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 16:50:01 by wdelaros          #+#    #+#             */
-/*   Updated: 2023/12/08 16:50:02 by wdelaros         ###   ########.fr       */
+/*   Updated: 2023/12/12 11:46:11 by wdelaros         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/parsing.h"
 
-static char	**ft_arrayjoin(char **src, char *s)
+char	**ft_arrayjoin(char **src, char *s)
 {
 	char	**res;
 	int		i;
@@ -34,6 +34,32 @@ static char	**ft_arrayjoin(char **src, char *s)
 		}
 	}
 	res[i] = ft_strdup(s);
+	ft_free_null(src);
+	return (res);
+}
+
+char	**ft_arrayzero(char **src, char *s)
+{
+	char	**res;
+	int		i;
+	int		len;
+
+	len = ft_strlen_double(src);
+	res = ft_calloc(len + 2, sizeof(char *));
+	if (!res)
+		return (NULL);
+	i = 1;
+	if (!s)
+		return (src);
+	if (src)
+	{
+		while (src[i - 1])
+		{
+			res[i] = ft_strdup(src[i - 1]);
+			i++;
+		}
+	}
+	res[0] = ft_strdup(s);
 	ft_free_null(src);
 	return (res);
 }

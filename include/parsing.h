@@ -6,7 +6,7 @@
 /*   By: wdelaros <wdelaros@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 16:50:42 by wdelaros          #+#    #+#             */
-/*   Updated: 2023/12/08 16:50:43 by wdelaros         ###   ########.fr       */
+/*   Updated: 2023/12/12 11:46:18 by wdelaros         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ char	**cpy_map(char **map, char **map_cpy);
 
 //parsing.c
 void	ft_parsing(char *file, t_data *data);
+char	**ft_arrayjoin(char **src, char *s);
+char	**ft_arrayzero(char **src, char *s);
 
 //parsing_data.c
 t_data	*get_sprite(char *sprite, char **map, t_data *data);

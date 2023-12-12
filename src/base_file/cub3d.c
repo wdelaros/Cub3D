@@ -6,7 +6,7 @@
 /*   By: wdelaros <wdelaros@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 16:49:28 by wdelaros          #+#    #+#             */
-/*   Updated: 2023/12/08 16:49:29 by wdelaros         ###   ########.fr       */
+/*   Updated: 2023/12/12 11:49:02 by wdelaros         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,15 @@ static int	alloc_map(t_data *data)
 	int	y;
 
 	x = 0;
+	data->wall = ft_arrayzero(data->wall, data->wall[0]);
 	while (data->wall[x])
+	{
+		data->wall[x] = ft_ffstrjoin(ft_strdup("1"), data->wall[x]);
+		data->wall[x] = ft_fstrjoin(data->wall[x], "1");
 		x++;
-	data->map = ft_calloc(x + 1, sizeof(int *));
+	}
+	data->wall = ft_arrayjoin(data->wall, data->wall[x - 1]);
+	data->map = ft_calloc(x + 2, sizeof(int *));
 	x = 0;
 	while (data->wall[x])
 	{
@@ -79,8 +85,8 @@ static void	finalize_map(t_data *data)
 				set_direction(data, 2, 1);
 			if (data->wall[x][y] == 'W' && set_pos(data, x, y))
 				set_direction(data, -2, -1);
-			if (ft_isdigit(data->wall[x][y]))
-				data->map[x][y] = data->wall[x][y] - 48;
+			if (data->wall[x][y] == GS || data->wall[x][y] == '1')
+				data->map[x][y] = 1;
 			else
 				data->map[x][y] = 0;
 			y++;
