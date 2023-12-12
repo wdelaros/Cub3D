@@ -136,3 +136,8 @@ fclean: clean
 re: fclean all
 	@echo "$(ERASE_LINE)$(GREEN)✔︎ $(ITALIC)Remake complete$(RESET)\
 	$(GREEN) ✔︎$(RESET)"
+
+run:
+	@afplay Doom_E1M1.mp3 &>/dev/null &
+	./cub3d map/default.cub
+	@killall afplay

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brheaume <marvin@42quebec.com>             +#+  +:+       +#+        */
+/*   By: wdelaros <wdelaros@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 15:51:18 by brheaume          #+#    #+#             */
-/*   Updated: 2023/12/08 15:51:18 by brheaume         ###   ########.fr       */
+/*   Updated: 2023/12/12 14:42:41 by wdelaros         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,5 @@ void	ft_error_interrupt(t_data *data)
 	ft_xfree(data->west.path);
 	ft_putendl_fd("Interrupted!", ERROR_OUTPUT);
 	mlx_terminate(data->mlx);
-	exit(EXIT_FAILURE);
+	exit(EXIT_SUCCESS);
 }
