@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycast.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brheaume <marvin@42quebec.com>             +#+  +:+       +#+        */
+/*   By: wdelaros <wdelaros@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 15:51:38 by brheaume          #+#    #+#             */
-/*   Updated: 2023/12/08 15:51:39 by brheaume         ###   ########.fr       */
+/*   Updated: 2023/12/14 12:27:30 by wdelaros         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static void	ft_dda(t_data *data)
 			else
 				data->info->side = 3;
 		}
-		if (data->map[data->info->map.x][data->info->map.y] > 0)
+		if (data->map[data->info->map.x][data->info->map.y] == 0)
 			data->info->hit = 1;
 	}
 }

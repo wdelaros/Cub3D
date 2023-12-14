@@ -6,7 +6,7 @@
 /*   By: wdelaros <wdelaros@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 16:49:28 by wdelaros          #+#    #+#             */
-/*   Updated: 2023/12/12 11:49:02 by wdelaros         ###   ########.fr       */
+/*   Updated: 2023/12/14 12:28:01 by wdelaros         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,9 +86,9 @@ static void	finalize_map(t_data *data)
 			if (data->wall[x][y] == 'W' && set_pos(data, x, y))
 				set_direction(data, -2, -1);
 			if (data->wall[x][y] == GS || data->wall[x][y] == '1')
-				data->map[x][y] = 1;
-			else
 				data->map[x][y] = 0;
+			else
+				data->map[x][y] = 1;
 			y++;
 		}
 		x++;
