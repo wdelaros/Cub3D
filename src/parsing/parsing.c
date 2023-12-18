@@ -6,7 +6,7 @@
 /*   By: wdelaros <wdelaros@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 16:50:01 by wdelaros          #+#    #+#             */
-/*   Updated: 2023/12/12 11:46:11 by wdelaros         ###   ########.fr       */
+/*   Updated: 2023/12/18 16:45:08 by wdelaros         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,35 @@ static char	**ft_loadmap(char *path)
 	return (NULL);
 }
 
+t_data	*ft_rework_map(t_data *data)
+{
+	int	len;
+	int	i;
+	int	j;
+
+	i = 0;
+	len = 0;
+	while (data->wall[i] != NULL)
+	{
+		if (len < (int)ft_strlen(data->wall[i]))
+			len = (int)ft_strlen(data->wall[i]);
+		i++;
+	}
+	i = 0;
+	while (data->wall[i])
+	{
+		j = 0;
+		while (j < len)
+		{
+			if (!data->wall[i][j])
+				data->wall[i] = ft_fstrjoin(data->wall[i], "1");
+			j++;
+		}
+		i++;
+	}
+	return (data);
+}
+
 void	ft_parsing(char *file, t_data *data)
 {
 	char	**map;
@@ -98,5 +127,6 @@ void	ft_parsing(char *file, t_data *data)
 	if (!map)
 		ft_exit_parsing("Empty map", map, data);
 	data = parse_file(map, data);
+	data = ft_rework_map(data);
 	ft_free_null(map);
 }
